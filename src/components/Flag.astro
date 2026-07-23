@@ -1,0 +1,47 @@
+---
+/** Drapeau SVG net (pas d'emoji) pour le sélecteur de langue. */
+interface Props {
+  code: 'en' | 'es' | 'fr';
+  class?: string;
+}
+const { code, class: className = 'h-4 w-[22px]' } = Astro.props;
+---
+
+<span
+  class:list={['inline-block shrink-0 overflow-hidden rounded-[3px] ring-1 ring-white/15', className]}
+  role="img"
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 24 18" width="100%" height="100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    {
+      code === 'fr' && (
+        <>
+          <rect width="8" height="18" fill="#0055A4" />
+          <rect x="8" width="8" height="18" fill="#FFFFFF" />
+          <rect x="16" width="8" height="18" fill="#EF4135" />
+        </>
+      )
+    }
+    {
+      code === 'es' && (
+        <>
+          <rect width="24" height="18" fill="#AA151B" />
+          <rect y="4.5" width="24" height="9" fill="#F1BF00" />
+        </>
+      )
+    }
+    {
+      code === 'en' && (
+        <>
+          <rect width="24" height="18" fill="#012169" />
+          <path d="M0 0 L24 18 M24 0 L0 18" stroke="#FFFFFF" stroke-width="5" />
+          <path d="M0 0 L24 18 M24 0 L0 18" stroke="#C8102E" stroke-width="2" />
+          <rect x="9.5" width="5" height="18" fill="#FFFFFF" />
+          <rect y="6.5" width="24" height="5" fill="#FFFFFF" />
+          <rect x="10.7" width="2.6" height="18" fill="#C8102E" />
+          <rect y="7.7" width="24" height="2.6" fill="#C8102E" />
+        </>
+      )
+    }
+  </svg>
+</span>

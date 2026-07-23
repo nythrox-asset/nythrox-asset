@@ -1,0 +1,57 @@
+---
+import { SITE } from '../site';
+import { toLang, useTranslations, homeHref } from '../i18n/utils';
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const home = homeHref(lang);
+const year = 2026;
+const social = Object.entries(SITE.social).filter(([, v]) => v);
+---
+
+<footer id="about" class="mt-24 border-t border-border/70 bg-surface/40">
+  <div class="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+    <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-md">
+        <div class="flex items-center gap-2.5">
+          <img src="/branding/nythrox_logo_transparent.png" alt="" width="30" height="30" class="h-7 w-7" />
+          <span class="font-display text-lg font-bold text-text">Nythrox</span>
+        </div>
+        <p class="mt-4 text-sm leading-relaxed text-text-muted">{t('footer.tagline')}</p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <span class="text-xs font-semibold uppercase tracking-wider text-text-faint">{t('footer.explore')}</span>
+        <a href={`${home}#assets`} class="text-sm text-text-muted transition-colors hover:text-text">{t('nav.assets')}</a>
+        <a
+          href={SITE.fabStoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+        >
+          {t('nav.fabStore')}
+          <svg viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        {
+          social.map(([k, v]) => (
+            <a
+              href={k === 'email' ? `mailto:${v}` : v}
+              target={k === 'email' ? undefined : '_blank'}
+              rel="noopener noreferrer"
+              class="text-sm capitalize text-text-muted transition-colors hover:text-text"
+            >
+              {k}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-2 border-t border-border/60 pt-6 text-xs text-text-faint sm:flex-row sm:items-center sm:justify-between">
+      <span>{t('footer.rights', { year })}</span>
+      <span>{t('footer.builtFor')}</span>
+    </div>
+  </div>
+</footer>

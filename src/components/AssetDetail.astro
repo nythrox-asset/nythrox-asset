@@ -1,0 +1,181 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Badge from './Badge.astro';
+import BuyPanel from './BuyPanel.astro';
+import FeatureList from './FeatureList.astro';
+import Gallery from './Gallery.astro';
+import SpecTable from './SpecTable.astro';
+import VideoEmbed from './VideoEmbed.astro';
+import CubeMark from './CubeMark.astro';
+import { toLang, useTranslations, localizedContent, homeHref } from '../i18n/utils';
+
+interface Props {
+  asset: CollectionEntry<'assets'>;
+}
+const { asset } = Astro.props;
+const d = asset.data;
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const l = localizedContent(d, lang);
+const home = homeHref(lang);
+const { Content } = await render(asset);
+
+const hasSpecs = d.specs && Object.values(d.specs).some((v) => v !== undefined);
+const ogImage = d.cover?.src;
+---
+
+<Base title={l.title} description={l.tagline} ogImage={ogImage}>
+  <div class="mx-auto max-w-6xl px-5 pt-8 sm:px-8">
+    <a
+      href={`${home}#assets`}
+      class="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+    >
+      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      {t('detail.allAssets')}
+    </a>
+
+    <header class="mt-6 max-w-3xl">
+      <div class="flex flex-wrap items-center gap-2">
+        {d.category && <Badge variant="accent">{d.category}</Badge>}
+        {d.engine && <Badge>{d.engine}</Badge>}
+      </div>
+      <h1 class="mt-4 text-3xl font-bold text-text sm:text-5xl">{l.title}</h1>
+      <p class="mt-4 text-lg leading-relaxed text-text-muted">{l.tagline}</p>
+    </header>
+  </div>
+
+  <!-- Média de tête : vidéo > image > placeholder de marque -->
+  <div class="mx-auto mt-8 max-w-6xl px-5 sm:px-8">
+    {
+      d.youtube ? (
+        <VideoEmbed youtube={d.youtube} title={l.title} />
+      ) : d.cover ? (
+        <div class="overflow-hidden rounded-[--radius-card] border border-border">
+          <Image
+            src={d.cover}
+            alt={l.title}
+            widths={[640, 1024, 1600]}
+            sizes="(max-width: 1024px) 100vw, 1152px"
+            class="w-full object-cover"
+          />
+        </div>
+      ) : (
+        <div class="relative flex aspect-[16/7] items-center justify-center overflow-hidden rounded-[--radius-card] border border-border bg-gradient-to-br from-surface-2 via-surface to-elevated">
+          <div class="iso-grid absolute inset-0 opacity-50" />
+          <CubeMark class="relative h-24 w-24" float={true} />
+        </div>
+      )
+    }
+  </div>
+
+  <div class="mx-auto mt-12 grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_340px]">
+    <div class="min-w-0">
+      <div class="prose-nythrox max-w-none">
+        <Content />
+      </div>
+
+      {
+        l.features.length > 0 && (
+          <section class="mt-12">
+            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.whatsIncluded')}</h2>
+            <FeatureList features={l.features} />
+          </section>
+        )
+      }
+
+      {
+        d.gallery.length > 0 && (
+          <section class="mt-12">
+            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.gallery')}</h2>
+            <Gallery images={d.gallery} title={l.title} />
+          </section>
+        )
+      }
+
+      {
+        hasSpecs && (
+          <section class="mt-12">
+            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.technicalDetails')}</h2>
+            <SpecTable specs={d.specs!} engine={d.engine} />
+          </section>
+        )
+      }
+
+      {
+        d.tags.length > 0 && (
+          <section class="mt-12">
+            <div class="flex flex-wrap gap-2">
+              {d.tags.map((tag) => (
+                <Badge variant="outline">{tag}</Badge>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <BuyPanel data={d} />
+    </aside>
+  </div>
+</Base>
+
+<style is:global>
+  .prose-nythrox {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .prose-nythrox > * + * {
+    margin-top: 1.1em;
+  }
+  .prose-nythrox h2 {
+    color: var(--color-text);
+    font-size: 1.35rem;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+  }
+  .prose-nythrox h3 {
+    color: var(--color-text);
+    font-size: 1.1rem;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  .prose-nythrox strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .prose-nythrox a {
+    color: var(--color-accent-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-nythrox ul {
+    list-style: none;
+    padding: 0;
+  }
+  .prose-nythrox li {
+    position: relative;
+    padding-left: 1.4em;
+  }
+  .prose-nythrox li::before {
+    content: '';
+    position: absolute;
+    left: 0.15em;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+  .prose-nythrox code {
+    background: var(--color-surface-2);
+    color: var(--color-accent-bright);
+    padding: 0.15em 0.4em;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+</style>

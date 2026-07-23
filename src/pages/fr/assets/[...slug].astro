@@ -1,0 +1,10 @@
+---
+import { getAssetStaticPaths } from '../../../lib/assetPaths';
+import AssetDetail from '../../../components/AssetDetail.astro';
+
+export const getStaticPaths = getAssetStaticPaths;
+
+const { asset } = Astro.props;
+---
+
+<AssetDetail asset={asset} />

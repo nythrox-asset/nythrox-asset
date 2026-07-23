@@ -1,0 +1,86 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../site';
+import { languages } from '../i18n/ui';
+import { toLang, useTranslations, localizePath } from '../i18n/utils';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** URL d'image absolue ou relative pour les partages (Open Graph). */
+  ogImage?: string;
+}
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const {
+  title,
+  description = t('site.metaDescription'),
+  ogImage = '/branding/og-default.png',
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${t('site.titleSuffix')}`;
+const base = Astro.site ?? SITE.url;
+const canonical = new URL(Astro.url.pathname, base).href;
+const ogAbsolute = new URL(ogImage, base).href;
+
+// Variantes de langue de la page courante (hreflang)
+const alternates = languages.map((l) => ({
+  hreflang: l.code,
+  href: new URL(localizePath(Astro.url.pathname, l.code), base).href,
+}));
+const xDefault = new URL(localizePath(Astro.url.pathname, 'en'), base).href;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-pt-20">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/branding/nythrox_logo_transparent.png" />
+    <link rel="apple-touch-icon" href="/branding/nythrox_logo_transparent.png" />
+    <link rel="canonical" href={canonical} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#01061b" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Variantes de langue -->
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+
+    <!-- Open Graph / partages -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogAbsolute} />
+    <meta property="og:locale" content={lang} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogAbsolute} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+    >
+      {t('skip.content')}
+    </a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import AssetCard from './AssetCard.astro';
+import CubeMark from './CubeMark.astro';
+import { SITE } from '../site';
+import { toLang, useTranslations, homeHref } from '../i18n/utils';
+
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const home = homeHref(lang);
+
+const all = (await getCollection('assets'))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => {
+    if (b.data.order !== a.data.order) return b.data.order - a.data.order;
+    const bd = b.data.date?.getTime() ?? 0;
+    const ad = a.data.date?.getTime() ?? 0;
+    return bd - ad;
+  });
+
+const featured = all.filter((a) => a.data.featured);
+const rest = all.filter((a) => !a.data.featured);
+const count = all.length;
+const countLabel =
+  count > 0 ? t(count === 1 ? 'assets.countOne' : 'assets.countMany', { n: count }) : t('assets.comingSoon');
+---
+
+<Base>
+  <!-- HÉROS -->
+  <section class="relative overflow-hidden">
+    <div class="iso-grid pointer-events-none absolute inset-x-0 top-0 h-[520px] opacity-70"></div>
+    <div
+      class="pointer-events-none absolute left-1/2 top-[-120px] h-[420px] w-[820px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
+      style="background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 45%, transparent), transparent 70%);"
+    >
+    </div>
+
+    <div class="relative mx-auto max-w-6xl px-5 pb-8 pt-20 sm:px-8 sm:pt-28">
+      <div class="flex flex-col items-center text-center">
+        <CubeMark class="h-20 w-20 rise" float={true} />
+        <h1 class="rise mt-8 max-w-3xl text-4xl font-bold text-text text-glow sm:text-6xl" style="animation-delay:80ms">
+          {t('hero.titleLine1')}<br />{t('hero.titleLine2')}
+        </h1>
+        <p class="rise mt-5 max-w-xl text-base leading-relaxed text-text-muted sm:text-lg" style="animation-delay:160ms">
+          {t('hero.subtitle')}
+        </p>
+        <div class="rise mt-9 flex flex-wrap items-center justify-center gap-3" style="animation-delay:240ms">
+          <a
+            href={`${home}#assets`}
+            class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white transition-colors hover:bg-accent-deep"
+          >
+            {t('hero.browse')}
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+          <a
+            href={SITE.fabStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl border border-border-strong bg-surface px-6 py-3.5 font-semibold text-text transition-colors hover:border-accent/50"
+          >
+            {t('hero.visitFab')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  {
+    featured.length > 0 && (
+      <section class="mx-auto max-w-6xl px-5 pt-8 sm:px-8">
+        <div class="grid gap-5 lg:grid-cols-2">
+          {featured.map((a) => (
+            <AssetCard asset={a} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- TOUS LES ASSETS -->
+  <section id="assets" class="mx-auto max-w-6xl scroll-mt-20 px-5 pt-16 sm:px-8">
+    <div class="mb-8 flex items-end justify-between">
+      <div>
+        <h2 class="text-2xl font-bold text-text sm:text-3xl">{t('assets.heading')}</h2>
+        <p class="mt-1 text-sm text-text-muted">{countLabel}</p>
+      </div>
+    </div>
+
+    {
+      rest.length > 0 ? (
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {rest.map((a) => (
+            <AssetCard asset={a} />
+          ))}
+        </div>
+      ) : featured.length === 0 ? (
+        <div class="flex flex-col items-center rounded-[--radius-card] border border-dashed border-border-strong bg-surface/50 px-6 py-20 text-center">
+          <CubeMark class="h-14 w-14 opacity-60" />
+          <p class="mt-6 font-display text-lg font-semibold text-text">{t('assets.emptyTitle')}</p>
+          <p class="mt-2 max-w-sm text-sm text-text-muted">
+            {t('assets.emptyPre')}
+            <code class="rounded bg-surface-2 px-1.5 py-0.5 text-accent-bright">src/content/assets/</code>
+            {t('assets.emptyPost')}
+          </p>
+        </div>
+      ) : null
+    }
+  </section>
+</Base>

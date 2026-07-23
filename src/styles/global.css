@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Nythrox — jetons de marque (extraits du logo officiel)             */
+/*  navy #01061B · cream #F7F6F5 · cobalt #0451FA                      */
+/*  Tout le site lit ces variables : change une couleur ici et elle    */
+/*  se propage partout.                                                */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces (du plus sombre au plus clair) */
+  --color-bg: #01061b;
+  --color-surface: #070d26;
+  --color-surface-2: #0c1436;
+  --color-elevated: #111a45;
+  --color-border: #1b2547;
+  --color-border-strong: #2a3766;
+
+  /* Texte */
+  --color-text: #f7f6f5;
+  --color-text-muted: #aab2d4;
+  --color-text-faint: #6f78a0;
+
+  /* Accent (le cube cobalt) */
+  --color-accent: #0451fa;
+  --color-accent-bright: #5b8cff; /* pour le texte/liens sur fond sombre */
+  --color-accent-deep: #0335a8;
+
+  /* Sémantique */
+  --color-success: #22c55e;
+  --color-warning: #f5b544;
+
+  /* Typographie (polices auto-hébergées via @fontsource) */
+  --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Rayons */
+  --radius-card: 16px;
+
+  /* Largeur de contenu */
+  --breakpoint-3xl: 1600px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+/* Chiffres alignés pour les prix / compteurs */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus visible cohérent (accessibilité) */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent-bright);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Grille isométrique subtile réutilisable en fond de héros */
+.iso-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-border) 55%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* Halo cobalt réutilisable */
+.accent-glow {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent),
+    0 8px 40px -8px color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+/* Lueur douce sous le logo / titres */
+.text-glow {
+  text-shadow: 0 0 24px color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+/* Cartes : transition douce */
+.card-hover {
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 18px 50px -20px color-mix(in srgb, var(--color-accent) 40%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-hover { transition: none; }
+  .card-hover:hover { transform: none; }
+}
+
+/* Apparition au scroll (progressive, sûre pour reduced-motion) */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise {
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}

@@ -1,0 +1,48 @@
+---
+/**
+ * Motif « cube isométrique » de la marque Nythrox.
+ * Sert d'accent visuel et de placeholder de marque quand un asset n'a pas d'image.
+ */
+interface Props {
+  class?: string;
+  /** Anime une légère flottaison (désactivée si reduced-motion). */
+  float?: boolean;
+}
+const { class: className = '', float = false } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 100 100"
+  fill="none"
+  aria-hidden="true"
+  class:list={[className, float && 'cube-float']}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- face gauche (crème) -->
+  <path d="M20 37 L50 54 L50 88 L20 71 Z" fill="var(--color-text)" fill-opacity="0.92" />
+  <!-- face droite (cobalt) -->
+  <path d="M50 54 L80 37 L80 71 L50 88 Z" fill="var(--color-accent)" />
+  <!-- face du dessus (sombre) -->
+  <path d="M50 20 L80 37 L50 54 L20 37 Z" fill="var(--color-surface-2)" />
+  <!-- arêtes -->
+  <path
+    d="M50 20 L80 37 L80 71 L50 88 L20 71 L20 37 Z M50 54 L50 88 M50 54 L20 37 M50 54 L80 37"
+    stroke="var(--color-bg)"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    stroke-opacity="0.6"
+  />
+</svg>
+
+<style>
+  .cube-float {
+    animation: cube-float 6s ease-in-out infinite;
+  }
+  @keyframes cube-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cube-float { animation: none; }
+  }
+</style>

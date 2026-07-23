@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { toLang, useTranslations } from '../i18n/utils';
+
+interface Props {
+  specs: NonNullable<CollectionEntry<'assets'>['data']['specs']>;
+  engine?: string;
+}
+const { specs, engine } = Astro.props;
+const lang = toLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const yn = (b: boolean | undefined) => (b === undefined ? undefined : b ? t('common.yes') : t('common.no'));
+
+// Ordre + libellés (traduits). Toute valeur `undefined` est filtrée → ligne masquée.
+const rows: Array<[string, string | undefined]> = [
+  [t('spec.engine'), engine],
+  [t('spec.formats'), specs.formats?.join(', ')],
+  [t('spec.meshes'), specs.meshes?.toString()],
+  [t('spec.triangles'), specs.triangles],
+  [t('spec.materials'), specs.materials?.toString()],
+  [t('spec.textures'), specs.textures?.toString()],
+  [t('spec.textureRes'), specs.textureRes],
+  [t('spec.collision'), specs.collision],
+  [t('spec.lods'), specs.lods],
+  [t('spec.nanite'), yn(specs.nanite)],
+  [t('spec.rigged'), yn(specs.rigged)],
+  [t('spec.animated'), specs.animated],
+  [t('spec.characters'), specs.characters?.toString()],
+];
+const visible = rows.filter(([, v]) => v !== undefined && v !== '');
+---
+
+{
+  visible.length > 0 && (
+    <div class="overflow-hidden rounded-[--radius-card] border border-border bg-surface">
+      <dl class="divide-y divide-border/60">
+        {visible.map(([label, value]) => (
+          <div class="flex items-start justify-between gap-6 px-5 py-3.5">
+            <dt class="text-sm text-text-muted">{label}</dt>
+            <dd class="text-right text-sm font-medium tabular text-text">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )
+}

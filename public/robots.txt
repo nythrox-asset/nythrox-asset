@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nythrox-asset.com/sitemap-index.xml

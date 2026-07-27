@@ -1,6 +1,6 @@
 ---
 import { SITE } from '../site';
-import { toLang, useTranslations, homeHref } from '../i18n/utils';
+import { toLang, useTranslations, homeHref, localizePath } from '../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const lang = toLang(Astro.currentLocale);
@@ -9,6 +9,10 @@ const home = homeHref(lang);
 const links = [
   { href: `${home}#assets`, label: t('nav.assets') },
   { href: `${home}#about`, label: t('nav.about') },
+  // Documentation et support sont annonces sur les fiches Fab : ils doivent
+  // etre atteignables depuis n'importe quelle page, pas seulement l'accueil.
+  { href: localizePath('/docs/interactive-door-system', lang), label: t('nav.docs') },
+  { href: localizePath('/support', lang), label: t('nav.support') },
 ];
 ---
 
@@ -22,7 +26,7 @@ const links = [
         height="34"
         class="h-8 w-8 transition-transform duration-300 group-hover:scale-105"
       />
-      <span class="font-display text-lg font-bold tracking-tight text-text">Nythrox</span>
+      <span class="font-display text-lg font-bold tracking-tight text-text">Nythrox-Asset</span>
     </a>
 
     <div class="flex items-center gap-1 sm:gap-2">

@@ -1,6 +1,6 @@
 ---
 import { render } from 'astro:content';
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Badge from './Badge.astro';
@@ -24,11 +24,23 @@ const home = homeHref(lang);
 const { Content } = await render(asset);
 
 const hasSpecs = d.specs && Object.values(d.specs).some((v) => v !== undefined);
+const hasBody = (asset.body ?? '').trim().length > 0;
 const ogImage = d.cover?.src;
+
+/* Galerie interactive : uniquement les vraies captures (jamais la cover,
+   souvent typographiée). Repli sur la cover seule si pas de galerie. */
+const mediaSources = d.gallery.length > 0 ? d.gallery : d.cover ? [d.cover] : [];
+const useSwapGallery = !d.youtube && mediaSources.length > 0;
+const bigs = useSwapGallery
+  ? await Promise.all(mediaSources.map((img) => getImage({ src: img, width: 1600 })))
+  : [];
+const smalls = useSwapGallery
+  ? await Promise.all(mediaSources.map((img) => getImage({ src: img, width: 280 })))
+  : [];
 ---
 
 <Base title={l.title} description={l.tagline} ogImage={ogImage}>
-  <div class="mx-auto max-w-6xl px-5 pt-8 sm:px-8">
+  <div class="mx-auto max-w-6xl px-5 pt-6 sm:px-8">
     <a
       href={`${home}#assets`}
       class="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
@@ -37,110 +49,274 @@ const ogImage = d.cover?.src;
       {t('detail.allAssets')}
     </a>
 
-    <header class="mt-6 max-w-3xl">
-      <div class="flex flex-wrap items-center gap-2">
-        {d.category && <Badge variant="accent">{d.category}</Badge>}
-        {d.engine && <Badge>{d.engine}</Badge>}
-      </div>
-      <h1 class="mt-4 text-3xl font-bold text-text sm:text-5xl">{l.title}</h1>
-      <p class="mt-4 text-lg leading-relaxed text-text-muted">{l.tagline}</p>
-    </header>
-  </div>
-
-  <!-- Média de tête : vidéo > image > placeholder de marque -->
-  <div class="mx-auto mt-8 max-w-6xl px-5 sm:px-8">
-    {
-      d.youtube ? (
-        <VideoEmbed youtube={d.youtube} title={l.title} />
-      ) : d.cover ? (
-        <div class="overflow-hidden rounded-[--radius-card] border border-border">
-          <Image
-            src={d.cover}
-            alt={l.title}
-            widths={[640, 1024, 1600]}
-            sizes="(max-width: 1024px) 100vw, 1152px"
-            class="w-full object-cover"
-          />
-        </div>
-      ) : (
-        <div class="relative flex aspect-[16/7] items-center justify-center overflow-hidden rounded-[--radius-card] border border-border bg-gradient-to-br from-surface-2 via-surface to-elevated">
-          <div class="iso-grid absolute inset-0 opacity-50" />
-          <CubeMark class="relative h-24 w-24" float={true} />
-        </div>
-      )
-    }
-  </div>
-
-  <div class="mx-auto mt-12 grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_340px]">
-    <div class="min-w-0">
-      <div class="prose-nythrox max-w-none">
-        <Content />
-      </div>
-
-      {
-        l.features.length > 0 && (
-          <section class="mt-12">
-            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.whatsIncluded')}</h2>
-            <FeatureList features={l.features} />
-          </section>
-        )
-      }
-
-      {
-        d.gallery.length > 0 && (
-          <section class="mt-12">
-            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.gallery')}</h2>
-            <Gallery images={d.gallery} title={l.title} />
-          </section>
-        )
-      }
-
-      {
-        hasSpecs && (
-          <section class="mt-12">
-            <h2 class="mb-5 text-xl font-bold text-text">{t('detail.technicalDetails')}</h2>
-            <SpecTable specs={d.specs!} engine={d.engine} />
-          </section>
-        )
-      }
-
-      {
-        d.tags.length > 0 && (
-          <section class="mt-12">
-            <div class="flex flex-wrap gap-2">
-              {d.tags.map((tag) => (
-                <Badge variant="outline">{tag}</Badge>
-              ))}
+    <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_340px]">
+      <!-- Colonne média + contenu -->
+      <div class="min-w-0">
+        {
+          d.youtube ? (
+            <VideoEmbed youtube={d.youtube} title={l.title} />
+          ) : useSwapGallery ? (
+            <div data-media>
+              <div class="group relative overflow-hidden rounded-xl bg-surface-2">
+                <img
+                  data-main
+                  src={bigs[0].src}
+                  alt={l.title}
+                  class="aspect-video w-full object-cover"
+                />
+                {
+                  mediaSources.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        data-prev
+                        aria-label={t('gallery.prev')}
+                        class="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-bg/70 text-text opacity-0 backdrop-blur-sm transition-opacity hover:bg-bg/90 focus-visible:opacity-100 group-hover:opacity-100"
+                      >
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      </button>
+                      <button
+                        type="button"
+                        data-next
+                        aria-label={t('gallery.next')}
+                        class="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-bg/70 text-text opacity-0 backdrop-blur-sm transition-opacity hover:bg-bg/90 focus-visible:opacity-100 group-hover:opacity-100"
+                      >
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      </button>
+                    </>
+                  )
+                }
+              </div>
+              {
+                mediaSources.length > 1 && (
+                  <div class="relative mt-2.5 px-10">
+                    <div
+                      data-thumbs
+                      class="flex cursor-grab gap-2 overflow-x-auto pb-1 select-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    >
+                      {smalls.map((s, i) => (
+                        <button
+                          type="button"
+                          data-big={bigs[i].src}
+                          aria-label={t('gallery.open', { i: i + 1, n: mediaSources.length })}
+                          class:list={[
+                            'shrink-0 overflow-hidden rounded border-2 transition-colors',
+                            i === 0 ? 'border-accent' : 'border-transparent hover:border-border-strong',
+                          ]}
+                        >
+                          <img src={s.src} alt="" draggable="false" class="pointer-events-none aspect-video w-[92px] object-cover" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      type="button"
+                      data-thumbs-prev
+                      aria-label={t('gallery.prev')}
+                      class="absolute left-0 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-text transition-colors hover:bg-white/25"
+                    >
+                      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </button>
+                    <button
+                      type="button"
+                      data-thumbs-next
+                      aria-label={t('gallery.next')}
+                      class="absolute right-0 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-text transition-colors hover:bg-white/25"
+                    >
+                      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </button>
+                  </div>
+                )
+              }
             </div>
-          </section>
-        )
-      }
-    </div>
+          ) : (
+            <div class="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-border bg-surface-2">
+              <CubeMark class="relative h-24 w-24" float={true} />
+            </div>
+          )
+        }
 
-    <aside class="lg:sticky lg:top-24 lg:self-start">
-      <BuyPanel data={d} />
-    </aside>
+        {
+          d.youtube && d.gallery.length > 0 && (
+            <section class="mt-8">
+              <h2 class="mb-4 text-lg font-bold text-text">{t('detail.gallery')}</h2>
+              <Gallery images={d.gallery} title={l.title} />
+            </section>
+          )
+        }
+
+        <!-- Description -->
+        <div class="mt-8">
+          {l.intro && <p class="text-[15px] leading-relaxed text-text-muted">{l.intro}</p>}
+
+          {
+            hasBody && (
+              <div class="prose-nythrox mt-4 max-w-none">
+                <Content />
+              </div>
+            )
+          }
+        </div>
+
+        {
+          l.features.length > 0 && (
+            <section class="mt-10">
+              <h2 class="mb-4 text-lg font-bold text-text">{t('detail.whatsIncluded')}</h2>
+              <FeatureList features={l.features} />
+            </section>
+          )
+        }
+
+        {
+          hasSpecs && (
+            <section class="mt-10">
+              <h2 class="mb-4 text-lg font-bold text-text">{t('detail.technicalDetails')}</h2>
+              <SpecTable specs={d.specs!} engine={d.engine} />
+            </section>
+          )
+        }
+
+        {
+          l.includes && (
+            <section class="mt-8">
+              <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-text-faint">{t('detail.includes')}</h3>
+              <p class="text-sm leading-relaxed text-text-muted">{l.includes}</p>
+            </section>
+          )
+        }
+
+        {
+          l.notes && (
+            <section class="mt-6 rounded-lg border border-warning/30 bg-warning/5 p-4">
+              <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-warning">{t('detail.notes')}</h3>
+              <p class="text-sm leading-relaxed text-text-muted">{l.notes}</p>
+            </section>
+          )
+        }
+
+        {
+          l.idealFor && (
+            <section class="mt-8">
+              <h2 class="mb-3 text-lg font-bold text-text">{t('detail.idealFor')}</h2>
+              <p class="text-sm leading-relaxed text-text-muted">{l.idealFor}</p>
+            </section>
+          )
+        }
+
+        {
+          d.tags.length > 0 && (
+            <section class="mt-10">
+              <div class="flex flex-wrap gap-2">
+                {d.tags.map((tag) => (
+                  <Badge variant="outline">{tag}</Badge>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </div>
+
+      <!-- Colonne droite : titre + panneau (façon fiche produit) -->
+      <aside class="lg:sticky lg:top-20 lg:self-start">
+        <div class="flex flex-wrap items-center gap-2">
+          {d.category && <Badge variant="accent">{d.category}</Badge>}
+          {d.engine && <Badge>{d.engine}</Badge>}
+        </div>
+        <h1 class="mt-3 text-2xl font-bold leading-tight text-text">{l.title}</h1>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">{l.tagline}</p>
+        <div class="mt-4">
+          <BuyPanel data={d} />
+        </div>
+      </aside>
+    </div>
   </div>
 </Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-media]').forEach((wrap) => {
+    const main = wrap.querySelector<HTMLImageElement>('[data-main]');
+    const btns = [...wrap.querySelectorAll<HTMLButtonElement>('button[data-big]')];
+    if (!main || !btns.length) return;
+    let current = 0;
+
+    const show = (n: number) => {
+      current = (n + btns.length) % btns.length;
+      const b = btns[current];
+      main.src = b.dataset.big!;
+      btns.forEach((x, k) => {
+        x.classList.toggle('border-accent', k === current);
+        x.classList.toggle('border-transparent', k !== current);
+      });
+      b.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+    };
+
+    btns.forEach((b, k) => b.addEventListener('click', () => show(k)));
+    wrap.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    wrap.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+
+    // Bande de miniatures : flèches = sélectionner l'image d'à côté,
+    // et glisser à la main pour parcourir
+    const strip = wrap.querySelector<HTMLElement>('[data-thumbs]');
+    if (strip) {
+      wrap.querySelector('[data-thumbs-prev]')?.addEventListener('click', () => show(current - 1));
+      wrap.querySelector('[data-thumbs-next]')?.addEventListener('click', () => show(current + 1));
+
+      // Glisser-déposer à la souris (le tactile défile nativement)
+      let down = false;
+      let dragged = false;
+      let startX = 0;
+      let startScroll = 0;
+      strip.addEventListener('pointerdown', (e) => {
+        if ((e as PointerEvent).pointerType !== 'mouse') return;
+        down = true;
+        dragged = false;
+        startX = (e as PointerEvent).clientX;
+        startScroll = strip.scrollLeft;
+        strip.classList.add('cursor-grabbing');
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = (e as PointerEvent).clientX - startX;
+        if (Math.abs(dx) > 5) dragged = true;
+        strip.scrollLeft = startScroll - dx;
+      });
+      window.addEventListener('pointerup', () => {
+        down = false;
+        strip.classList.remove('cursor-grabbing');
+      });
+      // Après un vrai glisser, on avale le clic pour ne pas changer d'image
+      strip.addEventListener(
+        'click',
+        (e) => {
+          if (dragged) {
+            e.preventDefault();
+            e.stopPropagation();
+            dragged = false;
+          }
+        },
+        true,
+      );
+    }
+  });
+</script>
 
 <style is:global>
   .prose-nythrox {
     color: var(--color-text-muted);
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: 0.9375rem;
+    line-height: 1.7;
   }
   .prose-nythrox > * + * {
     margin-top: 1.1em;
   }
   .prose-nythrox h2 {
     color: var(--color-text);
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     margin-top: 2em;
     margin-bottom: 0.6em;
   }
   .prose-nythrox h3 {
     color: var(--color-text);
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
   }

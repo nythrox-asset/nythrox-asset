@@ -21,4 +21,30 @@ export const SITE = {
     discord: '',
     email: '',
   },
+
+  /* ---------------------------------------------------------------- *
+   *  SUPPORT                                                          *
+   *  Le lien Discord est le canal de support annonce sur Fab. Tant    *
+   *  qu'il est vide, la page support affiche un etat "bientot" au     *
+   *  lieu d'un bouton mort : un acheteur qui clique dans le vide est  *
+   *  pire que pas de bouton du tout.                                  *
+   * ---------------------------------------------------------------- */
+  support: {
+    /** Invitation PERMANENTE (Discord > Inviter > Modifier > Jamais). */
+    discordInvite: '',
+    /** Adresse de repli pour ceux qui n'utilisent pas Discord. */
+    email: '',
+    /** Delai de reponse annonce. Ne promets que ce que tu tiens. */
+    responseTime: '48h',
+  },
+
+  /* ---------------------------------------------------------------- *
+   *  LIENS PRODUIT, repris dans la fiche Fab.                         *
+   * ---------------------------------------------------------------- */
+  doorSystem: {
+    /** Video de presentation (YouTube, Vimeo...). */
+    trailerUrl: '',
+    /** Page de vente Fab du plugin. */
+    fabUrl: '',
+  },
 } as const;

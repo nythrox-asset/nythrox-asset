@@ -5,7 +5,11 @@ import { glob } from 'astro/loaders';
 const localeOverride = z.object({
   title: z.string().optional(),
   tagline: z.string().optional(),
+  intro: z.string().optional(), // paragraphe d'accroche long
   features: z.array(z.string()).optional(),
+  includes: z.string().optional(), // ligne "Includes: ..."
+  notes: z.string().optional(), // "Important notes: ..."
+  idealFor: z.string().optional(), // "Ideal for: ..."
 });
 
 /* ------------------------------------------------------------------ *
@@ -38,9 +42,12 @@ const assets = defineCollection({
 
       /* --- Média (tous optionnels : sans image → placeholder de marque) --- */
       cover: image().optional(), // grande image de tête + carte
+      banner: image().optional(), // image bannière d'accueil (sinon 1re de gallery, JAMAIS la cover à texte)
       gallery: z.array(image()).default([]), // captures supplémentaires
       youtube: z.string().optional(), // ID ou URL YouTube → section vidéo
       playableDemoUrl: z.string().url().optional(), // vraie démo jouable en ligne
+      demoDownloadUrl: z.string().optional(), // fichier de démo à télécharger (chemin relatif ou URL)
+      demoDownloadNote: z.string().optional(), // ex. "Windows · 450 MB"
       demoMapIncluded: z.boolean().default(false), // map de démo LIVRÉE dans le pack
       overviewMapIncluded: z.boolean().default(false), // planche Overview LIVRÉE
 
@@ -51,7 +58,11 @@ const assets = defineCollection({
       license: z.string().optional(), // ex. "Standard License"
 
       /* --- Contenu --- */
+      intro: z.string().optional(), // paragraphe d'accroche (sinon corps markdown)
       features: z.array(z.string()).default([]), // 5–8 puces
+      includes: z.string().optional(), // ligne "Includes: ..."
+      notes: z.string().optional(), // "Important notes: ..."
+      idealFor: z.string().optional(), // "Ideal for: ..."
 
       /* --- Traductions optionnelles (repli auto sur les champs par défaut) --- */
       i18n: z

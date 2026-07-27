@@ -12,3 +12,12 @@ npm-debug.log*
 # macOS / Windows
 .DS_Store
 Thumbs.db
+
+# Local Netlify folder
+.netlify
+
+# large demo builds (deployed via CLI, not committed)
+public/downloads/
+
+# outillage local Claude Code, hors site
+.claude/

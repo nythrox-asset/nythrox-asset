@@ -18,6 +18,8 @@ export const ui = {
   en: {
     'nav.assets': 'Assets',
     'nav.about': 'About',
+    'nav.docs': 'Docs',
+    'nav.support': 'Support',
     'nav.fabStore': 'Fab store',
 
     'hero.titleLine1': 'Game-ready worlds,',
@@ -26,6 +28,15 @@ export const ui = {
       'Environments and modular kits for Unreal Engine. Organized files, verified collisions, drag-and-drop. No cleanup required.',
     'hero.browse': 'Browse assets',
     'hero.visitFab': 'Visit Fab store',
+
+    'trust.ready.title': 'Game-ready',
+    'trust.ready.desc': 'Tested in Unreal Engine 5.8',
+    'trust.source.title': 'Full source',
+    'trust.source.desc': 'Blender (.blend) and GLB included',
+    'trust.organized.title': 'Organized files',
+    'trust.organized.desc': 'Single /Game root, drag-and-drop',
+    'trust.collision.title': 'Verified collisions',
+    'trust.collision.desc': 'Custom collision on every mesh',
 
     'assets.heading': 'Assets',
     'assets.countOne': '{n} pack available',
@@ -45,6 +56,9 @@ export const ui = {
     'detail.whatsIncluded': "What's included",
     'detail.gallery': 'Gallery',
     'detail.technicalDetails': 'Technical details',
+    'detail.includes': 'Includes',
+    'detail.notes': 'Important notes',
+    'detail.idealFor': 'Ideal for',
 
     'spec.engine': 'Engine',
     'spec.formats': 'Formats',
@@ -67,6 +81,7 @@ export const ui = {
     'buy.getItOnFab': 'Get it on Fab',
     'buy.comingSoonFab': 'Coming soon to Fab',
     'buy.playDemo': 'Play the demo',
+    'buy.downloadDemo': 'Download the demo',
     'buy.demoMapIncluded': 'Demo map included',
     'buy.overviewMapIncluded': 'Overview map included',
 
@@ -97,6 +112,8 @@ export const ui = {
   es: {
     'nav.assets': 'Recursos',
     'nav.about': 'Acerca de',
+    'nav.docs': 'Documentación',
+    'nav.support': 'Soporte',
     'nav.fabStore': 'Tienda Fab',
 
     'hero.titleLine1': 'Mundos listos para jugar,',
@@ -105,6 +122,15 @@ export const ui = {
       'Entornos y kits modulares para Unreal Engine. Archivos organizados, colisiones verificadas, arrastra y suelta. Sin limpieza.',
     'hero.browse': 'Ver recursos',
     'hero.visitFab': 'Ir a la tienda Fab',
+
+    'trust.ready.title': 'Listo para el juego',
+    'trust.ready.desc': 'Probado en Unreal Engine 5.8',
+    'trust.source.title': 'Fuente completa',
+    'trust.source.desc': 'Blender (.blend) y GLB incluidos',
+    'trust.organized.title': 'Archivos organizados',
+    'trust.organized.desc': 'Raíz /Game única, arrastrar y soltar',
+    'trust.collision.title': 'Colisiones verificadas',
+    'trust.collision.desc': 'Colisión personalizada en cada malla',
 
     'assets.heading': 'Recursos',
     'assets.countOne': '{n} pack disponible',
@@ -124,6 +150,9 @@ export const ui = {
     'detail.whatsIncluded': 'Qué incluye',
     'detail.gallery': 'Galería',
     'detail.technicalDetails': 'Detalles técnicos',
+    'detail.includes': 'Incluye',
+    'detail.notes': 'Notas importantes',
+    'detail.idealFor': 'Ideal para',
 
     'spec.engine': 'Motor',
     'spec.formats': 'Formatos',
@@ -146,6 +175,7 @@ export const ui = {
     'buy.getItOnFab': 'Cómpralo en Fab',
     'buy.comingSoonFab': 'Pronto en Fab',
     'buy.playDemo': 'Jugar la demo',
+    'buy.downloadDemo': 'Descargar la demo',
     'buy.demoMapIncluded': 'Mapa demo incluido',
     'buy.overviewMapIncluded': 'Mapa overview incluido',
 
@@ -176,6 +206,8 @@ export const ui = {
   fr: {
     'nav.assets': 'Ressources',
     'nav.about': 'À propos',
+    'nav.docs': 'Documentation',
+    'nav.support': 'Support',
     'nav.fabStore': 'Boutique Fab',
 
     'hero.titleLine1': 'Des mondes prêts à jouer,',
@@ -184,6 +216,15 @@ export const ui = {
       'Environnements et kits modulaires pour Unreal Engine. Fichiers organisés, collisions vérifiées, glisser-déposer. Sans nettoyage.',
     'hero.browse': 'Voir les ressources',
     'hero.visitFab': 'Voir la boutique Fab',
+
+    'trust.ready.title': 'Prêt pour le jeu',
+    'trust.ready.desc': 'Testé sous Unreal Engine 5.8',
+    'trust.source.title': 'Sources complètes',
+    'trust.source.desc': 'Blender (.blend) et GLB inclus',
+    'trust.organized.title': 'Fichiers organisés',
+    'trust.organized.desc': 'Racine /Game unique, glisser-déposer',
+    'trust.collision.title': 'Collisions vérifiées',
+    'trust.collision.desc': 'Collision personnalisée sur chaque mesh',
 
     'assets.heading': 'Ressources',
     'assets.countOne': '{n} pack disponible',
@@ -203,6 +244,9 @@ export const ui = {
     'detail.whatsIncluded': 'Ce qui est inclus',
     'detail.gallery': 'Galerie',
     'detail.technicalDetails': 'Détails techniques',
+    'detail.includes': 'Inclus',
+    'detail.notes': 'Notes importantes',
+    'detail.idealFor': 'Idéal pour',
 
     'spec.engine': 'Moteur',
     'spec.formats': 'Formats',
@@ -225,6 +269,7 @@ export const ui = {
     'buy.getItOnFab': 'Obtenir sur Fab',
     'buy.comingSoonFab': 'Bientôt sur Fab',
     'buy.playDemo': 'Lancer la démo',
+    'buy.downloadDemo': 'Télécharger la démo',
     'buy.demoMapIncluded': 'Map démo incluse',
     'buy.overviewMapIncluded': 'Map Overview incluse',
 

@@ -22,7 +22,7 @@ const t = useTranslations(lang);
         {images.map((img, i) => (
           <button
             type="button"
-            class="card-hover group relative aspect-video overflow-hidden rounded-xl border border-border bg-surface-2"
+            class="card-hover group relative aspect-video overflow-hidden rounded-md border border-border bg-surface-2"
             data-index={i}
             data-full={img.src}
             aria-label={t('gallery.open', { i: i + 1, n: images.length })}

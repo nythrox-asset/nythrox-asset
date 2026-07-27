@@ -40,6 +40,10 @@ tags: [stylized, modular, unreal, game-ready]
 # Dépose tes images dans  src/content/assets/media/  et pointe-les ici.
 # Sans cover : un joli placeholder de marque (cube) s'affiche à la place.
 cover: ./media/mon-pack-cover.png
+# banner : image utilisée par le carrousel d'accueil si l'asset est featured.
+# Si absent, l'accueil prend la 1re image de gallery (JAMAIS la cover, souvent
+# typographiée, elle rend mal recadrée en bannière).
+# banner: ./media/mon-pack-banner.png
 gallery:
   - ./media/mon-pack-1.png
   - ./media/mon-pack-2.png

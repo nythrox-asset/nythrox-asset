@@ -55,11 +55,24 @@ export function homeHref(lang: Lang): string {
  *  si elle existe dans frontmatter `i18n.<lang>`, sinon la valeur par  *
  *  défaut (repli automatique).                                        *
  * ------------------------------------------------------------------ */
+type LocaleFields = {
+  title?: string;
+  tagline?: string;
+  intro?: string;
+  features?: string[];
+  includes?: string;
+  notes?: string;
+  idealFor?: string;
+};
 type AssetData = {
   title: string;
   tagline: string;
+  intro?: string;
   features: string[];
-  i18n?: Partial<Record<'es' | 'fr', { title?: string; tagline?: string; features?: string[] }>>;
+  includes?: string;
+  notes?: string;
+  idealFor?: string;
+  i18n?: Partial<Record<'es' | 'fr', LocaleFields>>;
 };
 
 export function localizedContent(data: AssetData, lang: Lang) {
@@ -67,7 +80,11 @@ export function localizedContent(data: AssetData, lang: Lang) {
   return {
     title: o?.title ?? data.title,
     tagline: o?.tagline ?? data.tagline,
+    intro: o?.intro ?? data.intro,
     features: o?.features ?? data.features,
+    includes: o?.includes ?? data.includes,
+    notes: o?.notes ?? data.notes,
+    idealFor: o?.idealFor ?? data.idealFor,
   };
 }
 

@@ -1,0 +1,274 @@
+---
+/* ------------------------------------------------------------------ *
+ *  Documentation en ligne du plugin Interactive Door System.           *
+ *  C'est la page visee par le lien "Documentation" de la fiche Fab.    *
+ *                                                                      *
+ *  Regle tenue ici, comme sur la page support : aucun bouton mort. Un  *
+ *  lien video ou Fab vide n'affiche rien plutot qu'une ancre creuse.   *
+ * ------------------------------------------------------------------ */
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { toLang, localizePath } from '../i18n/utils';
+
+const lang = toLang(Astro.currentLocale);
+const supportHref = localizePath('/support', lang);
+const hasTrailer = Boolean(SITE.doorSystem.trailerUrl);
+const hasFab = Boolean(SITE.doorSystem.fabUrl);
+
+const copy = {
+  en: {
+    kicker: 'Documentation',
+    title: 'Interactive Door System',
+    lead:
+      'Turn any imported mesh into a working interactive door in under a minute, even when its pivot is broken. The plugin builds a virtual hinge from the door’s real geometry, so meshes from CAD, scans, kitbashes or game exports open cleanly without a round-trip through Blender.',
+    trailer: 'Showcase video',
+    fab: 'Get it on Fab',
+    support: 'Support',
+    sections: [
+      {
+        h: 'One-click setup',
+        items: [
+          'Guided editor panel: select the meshes, record closed, record open, save.',
+          'Detect frame measures the real jamb of the opening and calibrates the hinge inset in one click.',
+          'Preview the full animation in the editor, without entering Play mode.',
+        ],
+      },
+      {
+        h: 'A hinge that respects your geometry',
+        items: [
+          'Virtual hinge on the detected slab edge, refined by hinge inset and a leaf-face pivot for thick slabs.',
+          'Demonstrated mode: the door rotates around the exact centre of the pose you recorded. Your gesture is the authority, ideal for unusual frames.',
+        ],
+      },
+      {
+        h: 'Gameplay out of the box',
+        items: [
+          'Locking, auto-close delay, open/close/locked sounds, motion easing.',
+          'Blueprint events: On Door Opened, On Door Closed, On Interaction Denied.',
+          'Linked doors for double leaves and airlocks.',
+          'Localized interaction prompt (EN, FR, DE, ES).',
+        ],
+      },
+      {
+        h: 'Scope, stated plainly',
+        items: [
+          'Unreal Engine 5.8, Windows 64-bit. C++ plugin with Editor and Runtime modules, full source included.',
+          'Doors only. This is a focused tool, not a generic interaction framework.',
+          'Demo scenes shown in the gallery are not included.',
+        ],
+      },
+    ],
+    specTitle: 'Technical specifications',
+    specs: [
+      ['Modules', 'NythroxDoorSystem (Runtime), NythroxDoorSystemEditor (Editor)'],
+      ['Source', 'Complete C++ included'],
+      ['Network', 'Replicated door state, server authoritative'],
+      ['Engine version', '5.8 (tested)'],
+      ['Platforms', 'Win64'],
+      ['Manual', 'English and French, included in the package'],
+      ['Automation tests', 'Included'],
+    ],
+    helpTitle: 'Something not working?',
+    helpBody: 'Open the support page and tell me what you are seeing. Answers come from a real person.',
+  },
+  fr: {
+    kicker: 'Documentation',
+    title: 'Interactive Door System',
+    lead:
+      'Transforme n’importe quel mesh importé en porte interactive fonctionnelle en moins d’une minute, même quand son pivot est cassé. Le plugin construit une charnière virtuelle à partir de la géométrie réelle de la porte : les meshes venant de CAO, de scans, de kitbash ou d’exports de jeu s’ouvrent proprement, sans détour par Blender.',
+    trailer: 'Vidéo de présentation',
+    fab: 'Voir sur Fab',
+    support: 'Support',
+    sections: [
+      {
+        h: 'Mise en place en un clic',
+        items: [
+          'Panneau guidé dans l’éditeur : sélectionne les meshes, enregistre la position fermée, la position ouverte, sauvegarde.',
+          'Detect frame mesure le dormant réel de l’ouverture et calibre le retrait de charnière en un clic.',
+          'Prévisualise l’animation complète dans l’éditeur, sans passer en mode Jeu.',
+        ],
+      },
+      {
+        h: 'Une charnière qui respecte ta géométrie',
+        items: [
+          'Charnière virtuelle sur l’arête de vantail détectée, affinée par le retrait de charnière et un pivot en face de vantail pour les portes épaisses.',
+          'Mode Demonstrated : la porte tourne autour du centre exact de la pose que tu as enregistrée. Ton geste fait autorité, idéal pour les encadrements inhabituels.',
+        ],
+      },
+      {
+        h: 'Du gameplay tout de suite',
+        items: [
+          'Verrouillage, délai de fermeture automatique, sons d’ouverture, de fermeture et de refus, lissage du mouvement.',
+          'Événements Blueprint : On Door Opened, On Door Closed, On Interaction Denied.',
+          'Portes liées, pour les doubles vantaux et les sas.',
+          'Invite d’interaction localisée (EN, FR, DE, ES).',
+        ],
+      },
+      {
+        h: 'Le périmètre, dit clairement',
+        items: [
+          'Unreal Engine 5.8, Windows 64 bits. Plugin C++ avec modules Editor et Runtime, source complète incluse.',
+          'Uniquement des portes. C’est un outil ciblé, pas un cadre d’interaction générique.',
+          'Les scènes de démonstration montrées dans la galerie ne sont pas incluses.',
+        ],
+      },
+    ],
+    specTitle: 'Caractéristiques techniques',
+    specs: [
+      ['Modules', 'NythroxDoorSystem (Runtime), NythroxDoorSystemEditor (Editor)'],
+      ['Source', 'C++ complet inclus'],
+      ['Réseau', 'État de porte répliqué, autorité serveur'],
+      ['Version moteur', '5.8 (testée)'],
+      ['Plateformes', 'Win64'],
+      ['Manuel', 'Anglais et français, inclus dans le paquet'],
+      ['Tests automatisés', 'Inclus'],
+    ],
+    helpTitle: 'Quelque chose ne marche pas ?',
+    helpBody: 'Ouvre la page support et décris ce que tu vois. Les réponses viennent d’une vraie personne.',
+  },
+  es: {
+    kicker: 'Documentación',
+    title: 'Interactive Door System',
+    lead:
+      'Convierte cualquier mesh importado en una puerta interactiva funcional en menos de un minuto, incluso con el pivote roto. El plugin construye una bisagra virtual a partir de la geometría real de la puerta: los meshes de CAD, escaneos, kitbash o exportaciones de juego se abren limpiamente, sin pasar por Blender.',
+    trailer: 'Vídeo de presentación',
+    fab: 'Ver en Fab',
+    support: 'Soporte',
+    sections: [
+      {
+        h: 'Configuración en un clic',
+        items: [
+          'Panel guiado en el editor: selecciona los meshes, graba la posición cerrada, la abierta y guarda.',
+          'Detect frame mide el marco real del hueco y calibra el retranqueo de la bisagra en un clic.',
+          'Previsualiza la animación completa en el editor, sin entrar en modo Juego.',
+        ],
+      },
+      {
+        h: 'Una bisagra que respeta tu geometría',
+        items: [
+          'Bisagra virtual sobre el borde de hoja detectado, afinada por el retranqueo y un pivote en la cara de la hoja para puertas gruesas.',
+          'Modo Demonstrated: la puerta gira alrededor del centro exacto de la pose que grabaste. Tu gesto manda, ideal para marcos poco habituales.',
+        ],
+      },
+      {
+        h: 'Jugabilidad lista para usar',
+        items: [
+          'Bloqueo, cierre automático con retardo, sonidos de apertura, cierre y rechazo, suavizado del movimiento.',
+          'Eventos Blueprint: On Door Opened, On Door Closed, On Interaction Denied.',
+          'Puertas vinculadas, para hojas dobles y esclusas.',
+          'Aviso de interacción localizado (EN, FR, DE, ES).',
+        ],
+      },
+      {
+        h: 'El alcance, dicho claro',
+        items: [
+          'Unreal Engine 5.8, Windows 64 bits. Plugin C++ con módulos Editor y Runtime, código fuente completo incluido.',
+          'Solo puertas. Es una herramienta enfocada, no un framework de interacción genérico.',
+          'Las escenas de demostración de la galería no están incluidas.',
+        ],
+      },
+    ],
+    specTitle: 'Especificaciones técnicas',
+    specs: [
+      ['Módulos', 'NythroxDoorSystem (Runtime), NythroxDoorSystemEditor (Editor)'],
+      ['Código fuente', 'C++ completo incluido'],
+      ['Red', 'Estado de puerta replicado, autoridad del servidor'],
+      ['Versión del motor', '5.8 (probada)'],
+      ['Plataformas', 'Win64'],
+      ['Manual', 'Inglés y francés, incluido en el paquete'],
+      ['Pruebas automatizadas', 'Incluidas'],
+    ],
+    helpTitle: '¿Algo no funciona?',
+    helpBody: 'Abre la página de soporte y describe lo que ves. Responde una persona real.',
+  },
+} as const;
+
+const c = copy[lang] ?? copy.en;
+---
+
+<Base title={c.title} description={c.lead}>
+  <article class="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
+    <p class="font-display text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+      {c.kicker}
+    </p>
+    <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-text sm:text-5xl">
+      {c.title}
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-text-muted">{c.lead}</p>
+
+    <!-- Liens produit. Un lien vide n'affiche rien : pas d'ancre morte. -->
+    <div class="mt-7 flex flex-wrap gap-3">
+      {
+        hasTrailer && (
+          <a
+            href={SITE.doorSystem.trailerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-text transition-colors hover:border-accent hover:text-accent"
+          >
+            {c.trailer}
+          </a>
+        )
+      }
+      {
+        hasFab && (
+          <a
+            href={SITE.doorSystem.fabUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-deep"
+          >
+            {c.fab}
+          </a>
+        )
+      }
+      <a
+        href={supportHref}
+        class="inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-text transition-colors hover:border-accent hover:text-accent"
+      >
+        {c.support}
+      </a>
+    </div>
+
+    {
+      c.sections.map((section) => (
+        <section class="mt-12">
+          <h2 class="font-display text-xl font-bold text-text">{section.h}</h2>
+          <ul class="mt-4 space-y-2.5">
+            {section.items.map((item) => (
+              <li class="flex gap-3 text-text-muted">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span class="leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="mt-12">
+      <h2 class="font-display text-xl font-bold text-text">{c.specTitle}</h2>
+      <dl class="mt-4 divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/70">
+        {
+          c.specs.map(([key, value]) => (
+            <div class="grid gap-1 px-5 py-3.5 sm:grid-cols-3 sm:gap-4">
+              <dt class="text-sm font-semibold text-text">{key}</dt>
+              <dd class="text-sm leading-relaxed text-text-muted sm:col-span-2">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="mt-12 rounded-2xl border border-border/70 bg-surface/60 p-6 sm:p-8">
+      <h2 class="font-display text-xl font-bold text-text">{c.helpTitle}</h2>
+      <p class="mt-2.5 leading-relaxed text-text-muted">{c.helpBody}</p>
+      <a
+        href={supportHref}
+        class="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-deep"
+      >
+        {c.support}
+      </a>
+    </section>
+  </article>
+</Base>

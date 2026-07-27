@@ -7,7 +7,7 @@
 /*  se propage partout.                                                */
 /* ------------------------------------------------------------------ */
 @theme {
-  /* Surfaces (du plus sombre au plus clair) */
+  /* Surfaces — palette navy Nythrox, mise en scène marketplace */
   --color-bg: #01061b;
   --color-surface: #070d26;
   --color-surface-2: #0c1436;
@@ -20,7 +20,7 @@
   --color-text-muted: #aab2d4;
   --color-text-faint: #6f78a0;
 
-  /* Accent (le cube cobalt) */
+  /* Accent (le cube cobalt Nythrox) */
   --color-accent: #0451fa;
   --color-accent-bright: #5b8cff; /* pour le texte/liens sur fond sombre */
   --color-accent-deep: #0335a8;
@@ -30,11 +30,11 @@
   --color-warning: #f5b544;
 
   /* Typographie (polices auto-hébergées via @fontsource) */
-  --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Tight Variable", "Inter Tight", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Rayons */
-  --radius-card: 16px;
+  /* Rayons — compacts : 8px panneaux/boutons, vignettes à angles nets */
+  --radius-card: 8px;
 
   /* Largeur de contenu */
   --breakpoint-3xl: 1600px;
@@ -66,8 +66,8 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
 }
 
 /* Chiffres alignés pour les prix / compteurs */
@@ -107,9 +107,9 @@ h1, h2, h3, h4 {
   transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 .card-hover:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: var(--color-border-strong);
-  box-shadow: 0 18px 50px -20px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.7);
 }
 @media (prefers-reduced-motion: reduce) {
   .card-hover { transition: none; }

@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import Badge from './Badge.astro';
 import CubeMark from './CubeMark.astro';
 import { toLang, useTranslations, assetHref, localizedContent } from '../i18n/utils';
 
@@ -15,9 +14,9 @@ const t = useTranslations(lang);
 const l = localizedContent(d, lang);
 const href = assetHref(lang, asset.id);
 
-// Petites pastilles de contenu (seulement si vrai)
+// Petites mentions sous le titre (seulement si vrai)
 const flags = [
-  d.playableDemoUrl && t('badge.playableDemo'),
+  (d.playableDemoUrl || d.demoDownloadUrl) && t('badge.playableDemo'),
   d.youtube && t('badge.video'),
   d.demoMapIncluded && t('badge.demoMap'),
 ].filter(Boolean) as string[];
@@ -25,12 +24,9 @@ const flags = [
 const price = d.pricePersonal;
 ---
 
-<a
-  href={href}
-  class="card-hover group relative flex flex-col overflow-hidden rounded-[--radius-card] border border-border bg-surface"
->
-  <!-- Média : image de couverture OU placeholder de marque -->
-  <div class="relative aspect-[16/10] overflow-hidden bg-surface-2">
+<a href={href} class="group block">
+  <!-- Vignette : l'image domine, texte en dessous sur le fond de page -->
+  <div class="relative aspect-video overflow-hidden rounded-lg bg-surface-2">
     {
       d.cover ? (
         <Image
@@ -38,49 +34,34 @@ const price = d.pricePersonal;
           alt={l.title}
           widths={[400, 640, 800]}
           sizes="(max-width: 640px) 100vw, 380px"
-          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
         />
       ) : (
-        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-2 via-surface to-elevated">
-          <div class="iso-grid absolute inset-0 opacity-40" />
-          <CubeMark class="relative h-16 w-16 opacity-90 transition-transform duration-500 group-hover:scale-110" />
-        </div>
-      )
-    }
-
-    {
-      d.category && (
-        <div class="absolute left-3 top-3">
-          <Badge variant="outline" class="bg-bg/70 backdrop-blur-sm">{d.category}</Badge>
+        <div class="flex h-full w-full items-center justify-center">
+          <CubeMark class="h-14 w-14 opacity-80" />
         </div>
       )
     }
   </div>
 
-  <div class="flex flex-1 flex-col p-5">
-    <h3 class="font-display text-lg font-semibold text-text">{l.title}</h3>
-    <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-text-muted">{l.tagline}</p>
-
-    {
-      flags.length > 0 && (
-        <div class="mt-4 flex flex-wrap gap-1.5">
-          {flags.map((f) => (
-            <Badge variant="accent">{f}</Badge>
-          ))}
-        </div>
-      )
-    }
-
-    <div class="mt-5 flex items-center justify-between border-t border-border/60 pt-4">
-      <span class="text-sm font-medium text-text">
-        {price ? <span class="tabular">{price}</span> : <span class="text-text-muted">{t('card.viewOnFab')}</span>}
-      </span>
-      <span class="inline-flex items-center gap-1 text-sm font-semibold text-accent-bright">
-        {t('card.details')}
-        <svg viewBox="0 0 24 24" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </span>
+  <div class="mt-2.5">
+    <h3 class="font-display text-sm font-semibold leading-snug text-text transition-colors group-hover:text-accent-bright">
+      {l.title}
+    </h3>
+    <p class="mt-0.5 line-clamp-1 text-xs text-text-muted">{l.tagline}</p>
+    <div class="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-text-faint">
+      {d.category && <span>{d.category}</span>}
+      {
+        flags.map((f) => (
+          <>
+            <span aria-hidden="true" class="text-text-faint/50">·</span>
+            <span>{f}</span>
+          </>
+        ))
+      }
+    </div>
+    <div class="tabular mt-1 text-xs text-text">
+      {price ? price : <span class="text-text-faint">{t('card.viewOnFab')}</span>}
     </div>
   </div>
 </a>

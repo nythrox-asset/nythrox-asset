@@ -1,0 +1,228 @@
+---
+/* ------------------------------------------------------------------ *
+ *  Page de support, annoncee sur les fiches Fab.                       *
+ *                                                                      *
+ *  Regle tenue ici : si SITE.support.discordInvite est vide, on        *
+ *  n'affiche PAS un bouton mort. Un acheteur qui clique dans le vide   *
+ *  perd confiance plus surement que s'il lit "bientot disponible".     *
+ * ------------------------------------------------------------------ */
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { toLang } from '../i18n/utils';
+
+// Meme motif que HomeBody : le composant deduit la langue, et chaque page
+// localisee n'est qu'une enveloppe d'une ligne.
+const lang = toLang(Astro.currentLocale);
+
+const hasDiscord = Boolean(SITE.support.discordInvite);
+const hasEmail = Boolean(SITE.support.email);
+
+const copy = {
+  en: {
+    kicker: 'Support',
+    title: 'Get help with your pack',
+    lead:
+      'Every Nythrox product is supported by a real person. Join the Discord, describe what you are seeing, and you get an answer.',
+    discordTitle: 'Discord — the fastest route',
+    discordBody:
+      'Bug reports, integration questions, feature requests. Dedicated channels per product, a searchable FAQ, and announcements when a pack is updated.',
+    discordCta: 'Join the Discord',
+    discordSoon: 'Invite link coming shortly.',
+    emailTitle: 'Prefer email?',
+    emailBody: 'For invoicing, licensing or anything you would rather not post publicly.',
+    responseTitle: 'Response time',
+    responseBody: `Typical first answer within ${SITE.support.responseTime}. Weekends included, but slower.`,
+    beforeTitle: 'Before you post, this saves us both time',
+    before: [
+      'Your Unreal Engine version, and the exact pack or plugin version.',
+      'What you did, what you expected, what happened instead.',
+      'A screenshot of the viewport, and the Output Log if something failed.',
+      'Whether the issue happens in a brand new empty project too.',
+    ],
+    scopeTitle: 'What support covers',
+    scopeYes: [
+      'Anything that does not work as described on the product page.',
+      'Installation, migration into your own project, engine version questions.',
+      'Bugs, crashes, missing references, broken collisions.',
+    ],
+    scopeNo: [
+      'Custom development or paid feature work on request.',
+      'Engine problems unrelated to the pack.',
+      'Redistribution or licence transfers, handled by Fab.',
+    ],
+  },
+  fr: {
+    kicker: 'Support',
+    title: 'De l’aide sur ton pack',
+    lead:
+      'Chaque produit Nythrox est suivi par une vraie personne. Rejoins le Discord, décris ce que tu vois, tu auras une réponse.',
+    discordTitle: 'Discord, le chemin le plus rapide',
+    discordBody:
+      'Signalements de bugs, questions d’intégration, demandes de fonctionnalités. Un canal par produit, une FAQ consultable, et les annonces de mise à jour.',
+    discordCta: 'Rejoindre le Discord',
+    discordSoon: 'Lien d’invitation bientôt disponible.',
+    emailTitle: 'Tu préfères l’e-mail ?',
+    emailBody: 'Pour la facturation, la licence, ou tout ce que tu ne veux pas écrire en public.',
+    responseTitle: 'Délai de réponse',
+    responseBody: `Première réponse généralement sous ${SITE.support.responseTime}. Week-ends compris, mais plus lentement.`,
+    beforeTitle: 'À joindre dès le premier message, ça fait gagner un aller-retour',
+    before: [
+      'Ta version d’Unreal Engine, et la version exacte du pack ou du plugin.',
+      'Ce que tu as fait, ce que tu attendais, ce qui s’est passé à la place.',
+      'Une capture du viewport, et l’Output Log si quelque chose a échoué.',
+      'Si le problème apparaît aussi dans un projet vide tout neuf.',
+    ],
+    scopeTitle: 'Ce que couvre le support',
+    scopeYes: [
+      'Tout ce qui ne fonctionne pas comme annoncé sur la fiche produit.',
+      'Installation, migration dans ton propre projet, questions de version moteur.',
+      'Bugs, plantages, références manquantes, collisions cassées.',
+    ],
+    scopeNo: [
+      'Le développement sur mesure, qui se traite en prestation.',
+      'Les problèmes du moteur sans rapport avec le pack.',
+      'La revente et les transferts de licence, gérés par Fab.',
+    ],
+  },
+  es: {
+    kicker: 'Soporte',
+    title: 'Ayuda con tu pack',
+    lead:
+      'Cada producto Nythrox tiene detrás a una persona real. Entra en el Discord, describe lo que ves y tendrás respuesta.',
+    discordTitle: 'Discord, la vía más rápida',
+    discordBody:
+      'Informes de errores, preguntas de integración, peticiones de funciones. Un canal por producto, FAQ consultable y avisos de actualización.',
+    discordCta: 'Entrar en Discord',
+    discordSoon: 'Enlace de invitación disponible en breve.',
+    emailTitle: '¿Prefieres el correo?',
+    emailBody: 'Para facturación, licencias o cualquier cosa que no quieras publicar.',
+    responseTitle: 'Tiempo de respuesta',
+    responseBody: `Primera respuesta normalmente en ${SITE.support.responseTime}. Fines de semana incluidos, pero más lentos.`,
+    beforeTitle: 'Antes de escribir, esto ahorra una ida y vuelta',
+    before: [
+      'Tu versión de Unreal Engine y la versión exacta del pack o plugin.',
+      'Qué hiciste, qué esperabas y qué ocurrió en su lugar.',
+      'Una captura del viewport y el Output Log si algo falló.',
+      'Si el problema aparece también en un proyecto vacío nuevo.',
+    ],
+    scopeTitle: 'Qué cubre el soporte',
+    scopeYes: [
+      'Todo lo que no funcione como se anuncia en la ficha del producto.',
+      'Instalación, migración a tu proyecto, preguntas de versión del motor.',
+      'Errores, cierres inesperados, referencias que faltan, colisiones rotas.',
+    ],
+    scopeNo: [
+      'Desarrollo a medida, que se trata como encargo.',
+      'Problemas del motor ajenos al pack.',
+      'Reventa y transferencia de licencias, gestionadas por Fab.',
+    ],
+  },
+} as const;
+
+const c = copy[lang] ?? copy.en;
+---
+
+<Base title={c.title} description={c.lead}>
+  <section class="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
+  <p class="font-display text-sm font-semibold uppercase tracking-[0.18em] text-accent">
+    {c.kicker}
+  </p>
+  <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-text sm:text-5xl">
+    {c.title}
+  </h1>
+  <p class="mt-5 text-lg leading-relaxed text-text-muted">{c.lead}</p>
+
+  <!-- Discord -->
+  <div class="mt-12 rounded-2xl border border-border/70 bg-surface/60 p-6 sm:p-8">
+    <h2 class="font-display text-xl font-bold text-text">{c.discordTitle}</h2>
+    <p class="mt-2.5 leading-relaxed text-text-muted">{c.discordBody}</p>
+    {
+      hasDiscord ? (
+        <a
+          href={SITE.support.discordInvite}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-deep"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true">
+            <path d="M19.3 5.3A16.4 16.4 0 0 0 15.2 4l-.2.4a15 15 0 0 1 3.6 1.2 12.9 12.9 0 0 0-11.2 0A15 15 0 0 1 11 4.4L10.8 4a16.4 16.4 0 0 0-4.1 1.3C3.5 10 2.7 14.5 3.1 19a16.5 16.5 0 0 0 5 2.5l.6-1a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.8 11.8 0 0 0 9.2 0l.4.3a10.8 10.8 0 0 1-1.7.8l.6 1a16.5 16.5 0 0 0 5-2.5c.5-5.2-.8-9.6-3.6-13.7ZM9.3 16.2c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z" />
+          </svg>
+          {c.discordCta}
+        </a>
+      ) : (
+        <p class="mt-5 inline-flex items-center gap-2 rounded-lg border border-dashed border-border px-4 py-2.5 text-sm font-medium text-text-muted">
+          {c.discordSoon}
+        </p>
+      )
+    }
+  </div>
+
+  <!-- E-mail + delai -->
+  <div class="mt-6 grid gap-6 sm:grid-cols-2">
+    {
+      hasEmail && (
+        <div class="rounded-2xl border border-border/70 bg-surface/40 p-6">
+          <h2 class="font-display text-lg font-bold text-text">{c.emailTitle}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">{c.emailBody}</p>
+          <a
+            href={`mailto:${SITE.support.email}`}
+            class="mt-3 inline-block text-sm font-semibold text-accent hover:underline"
+          >
+            {SITE.support.email}
+          </a>
+        </div>
+      )
+    }
+    <div class="rounded-2xl border border-border/70 bg-surface/40 p-6">
+      <h2 class="font-display text-lg font-bold text-text">{c.responseTitle}</h2>
+      <p class="mt-2 text-sm leading-relaxed text-text-muted">{c.responseBody}</p>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="mt-12">
+    <h2 class="font-display text-xl font-bold text-text">{c.beforeTitle}</h2>
+    <ul class="mt-4 space-y-2.5">
+      {
+        c.before.map((item) => (
+          <li class="flex gap-3 text-text-muted">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+            <span class="leading-relaxed">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- Perimetre -->
+  <div class="mt-12">
+    <h2 class="font-display text-xl font-bold text-text">{c.scopeTitle}</h2>
+    <div class="mt-4 grid gap-6 sm:grid-cols-2">
+      <ul class="space-y-2.5">
+        {
+          c.scopeYes.map((item) => (
+            <li class="flex gap-3 text-text-muted">
+              <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-accent" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="m5 13 4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="text-sm leading-relaxed">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="space-y-2.5">
+        {
+          c.scopeNo.map((item) => (
+            <li class="flex gap-3 text-text-muted/70">
+              <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round" />
+              </svg>
+              <span class="text-sm leading-relaxed">{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  </section>
+</Base>

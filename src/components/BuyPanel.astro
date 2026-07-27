@@ -14,9 +14,14 @@ const included = [
   d.demoMapIncluded && t('buy.demoMapIncluded'),
   d.overviewMapIncluded && t('buy.overviewMapIncluded'),
 ].filter(Boolean) as string[];
+
+// Y a-t-il une démo à mettre en avant ? (téléchargement OU lien jouable)
+const hasDemo = Boolean(d.demoDownloadUrl || d.playableDemoUrl);
+// Le fichier de démo est-il un vrai téléchargement (chemin/URL de fichier) ?
+const demoIsDownload = Boolean(d.demoDownloadUrl);
 ---
 
-<div class="rounded-[--radius-card] border border-border bg-surface p-6">
+<div class="rounded-lg border border-border-strong/60 bg-surface p-4">
   {
     (d.pricePersonal || d.pricePro) && (
       <div class="mb-5 flex flex-wrap items-end gap-x-6 gap-y-2">
@@ -36,13 +41,50 @@ const included = [
     )
   }
 
+  {/* --- GROS bouton démo (téléchargement direct ou lien jouable) --- */}
+  {
+    demoIsDownload ? (
+      <a
+        href={d.demoDownloadUrl}
+        download
+        class="flex w-full flex-col items-center justify-center gap-0.5 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-deep"
+      >
+        <span class="flex items-center gap-2 text-base">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {t('buy.downloadDemo')}
+        </span>
+        {d.demoDownloadNote && (
+          <span class="text-xs font-normal text-white/70">{d.demoDownloadNote}</span>
+        )}
+      </a>
+    ) : d.playableDemoUrl ? (
+      <a
+        href={d.playableDemoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-deep"
+      >
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        {t('buy.playDemo')}
+      </a>
+    ) : null
+  }
+
+  {/* --- Bouton Fab : gros si pas de démo, sinon juste en dessous --- */}
   {
     d.fabUrl ? (
       <a
         href={d.fabUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3.5 font-semibold text-white transition-colors hover:bg-accent-deep"
+        class:list={[
+          'flex w-full items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors',
+          hasDemo
+            ? 'mt-2.5 bg-white/15 px-4 py-2.5 text-text hover:bg-white/20'
+            : 'bg-accent px-4 py-2.5 text-white hover:bg-accent-deep',
+        ]}
       >
         {t('buy.getItOnFab')}
         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
@@ -50,23 +92,9 @@ const included = [
         </svg>
       </a>
     ) : (
-      <div class="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-border-strong px-5 py-3.5 font-semibold text-text-muted">
+      <div class="mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-border-strong px-4 py-2.5 text-sm font-medium text-text-muted">
         {t('buy.comingSoonFab')}
       </div>
-    )
-  }
-
-  {
-    d.playableDemoUrl && (
-      <a
-        href={d.playableDemoUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface-2 px-5 py-3 font-semibold text-text transition-colors hover:border-accent/50"
-      >
-        <svg viewBox="0 0 24 24" class="h-4 w-4 text-accent-bright" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-        {t('buy.playDemo')}
-      </a>
     )
   }
 

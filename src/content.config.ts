@@ -92,4 +92,27 @@ const assets = defineCollection({
     }),
 });
 
-export const collections = { assets };
+/* ------------------------------------------------------------------ *
+ *  Collection « docs »                                                *
+ *  Manuels des plugins, en ligne sur /docs/.                          *
+ *                                                                     *
+ *  Ces fichiers ne s'ecrivent PAS a la main : ils sont importes       *
+ *  depuis le README livre dans le plugin, par                         *
+ *  `scripts/importer_manuel_porte.py`. La source de verite reste le   *
+ *  manuel que l'acheteur trouve dans son paquet, sinon la page en     *
+ *  ligne et le fichier livre divergent des la premiere version.       *
+ *                                                                     *
+ *  Convention de nom : <produit>-<langue>.md                          *
+ * ------------------------------------------------------------------ */
+const docs = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/docs' }),
+  schema: z.object({
+    title: z.string(),
+    /** Fichier d'origine, pour retrouver d'ou vient le contenu. */
+    source: z.string().optional(),
+    /** Version du produit documentee, affichee sur la page. */
+    version: z.string().optional(),
+  }),
+});
+
+export const collections = { assets, docs };

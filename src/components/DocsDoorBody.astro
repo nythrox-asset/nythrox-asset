@@ -6,6 +6,7 @@
  *  Regle tenue ici, comme sur la page support : aucun bouton mort. Un  *
  *  lien video ou Fab vide n'affiche rien plutot qu'une ancre creuse.   *
  * ------------------------------------------------------------------ */
+import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site';
 import { toLang, localizePath } from '../i18n/utils';
@@ -14,6 +15,24 @@ const lang = toLang(Astro.currentLocale);
 const supportHref = localizePath('/support', lang);
 const hasTrailer = Boolean(SITE.doorSystem.trailerUrl);
 const hasFab = Boolean(SITE.doorSystem.fabUrl);
+
+/* ------------------------------------------------------------------ *
+ *  Le manuel complet, importe depuis le README livre dans le plugin.  *
+ *                                                                      *
+ *  Il n'existe qu'en anglais et en francais, parce que c'est ce que    *
+ *  contient le paquet. Sur la page espagnole on sert donc l'anglais,   *
+ *  en le disant : mieux vaut un manuel lisible dans une autre langue   *
+ *  qu'une page vide ou qu'une traduction automatique non verifiee.     *
+ * ------------------------------------------------------------------ */
+const manualLang = lang === 'fr' ? 'fr' : 'en';
+const manual = await getEntry('docs', `door-system-${manualLang}`);
+const rendered = manual ? await render(manual) : null;
+const Manual = rendered?.Content;
+const manualIsFallback = lang !== manualLang;
+
+/* Sommaire : uniquement les titres de niveau 2, les seuls que contient
+   le manuel. Un sommaire a deux niveaux sur 16 entrees serait illisible. */
+const toc = (rendered?.headings ?? []).filter((h) => h.depth === 2);
 
 const copy = {
   en: {
@@ -70,6 +89,12 @@ const copy = {
     ],
     helpTitle: 'Something not working?',
     helpBody: 'Open the support page and tell me what you are seeing. Answers come from a real person.',
+    manualTitle: 'Manual',
+    manualLead:
+      'The complete manual, word for word the one shipped inside the plugin. Nothing here is held back for buyers only, so you can read it before you buy.',
+    manualFallback: '',
+    tocTitle: 'On this page',
+    versionLabel: 'Documents',
   },
   fr: {
     kicker: 'Documentation',
@@ -125,6 +150,12 @@ const copy = {
     ],
     helpTitle: 'Quelque chose ne marche pas ?',
     helpBody: 'Ouvre la page support et décris ce que tu vois. Les réponses viennent d’une vraie personne.',
+    manualTitle: 'Manuel',
+    manualLead:
+      'Le manuel complet, mot pour mot celui qui est livré dans le plugin. Rien n’est réservé aux acheteurs, tu peux donc le lire avant d’acheter.',
+    manualFallback: '',
+    tocTitle: 'Sur cette page',
+    versionLabel: 'Documente',
   },
   es: {
     kicker: 'Documentación',
@@ -180,6 +211,13 @@ const copy = {
     ],
     helpTitle: '¿Algo no funciona?',
     helpBody: 'Abre la página de soporte y describe lo que ves. Responde una persona real.',
+    manualTitle: 'Manual',
+    manualLead:
+      'El manual completo, palabra por palabra el que se entrega dentro del plugin. Nada está reservado a los compradores, así que puedes leerlo antes de comprar.',
+    manualFallback:
+      'El manual existe en inglés y francés, que es lo que incluye el paquete. Abajo está la versión en inglés, sin traducción automática.',
+    tocTitle: 'En esta página',
+    versionLabel: 'Documenta',
   },
 } as const;
 
@@ -260,6 +298,52 @@ const c = copy[lang] ?? copy.en;
       </dl>
     </section>
 
+    {
+      Manual && (
+        <section class="mt-16 border-t border-border/70 pt-12">
+          <h2 class="font-display text-2xl font-bold text-text">{c.manualTitle}</h2>
+          <p class="mt-3 leading-relaxed text-text-muted">{c.manualLead}</p>
+          {manual?.data.version && (
+            <p class="mt-2 text-sm text-text-muted">
+              {c.versionLabel} <strong class="text-text">{manual.data.version}</strong>
+            </p>
+          )}
+          {manualIsFallback && c.manualFallback && (
+            <p class="mt-4 rounded-xl border border-border/70 bg-surface/60 px-4 py-3 text-sm leading-relaxed text-text-muted">
+              {c.manualFallback}
+            </p>
+          )}
+
+          {toc.length > 0 && (
+            <nav
+              class="mt-7 rounded-2xl border border-border/70 bg-surface/60 p-5 sm:p-6"
+              aria-label={c.tocTitle}
+            >
+              <p class="font-display text-sm font-semibold uppercase tracking-[0.14em] text-text-muted">
+                {c.tocTitle}
+              </p>
+              <ol class="mt-3 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                {toc.map((h) => (
+                  <li>
+                    <a
+                      href={`#${h.slug}`}
+                      class="text-sm leading-relaxed text-text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
+          <div class="docs-manual mt-10">
+            <Manual />
+          </div>
+        </section>
+      )
+    }
+
     <section class="mt-12 rounded-2xl border border-border/70 bg-surface/60 p-6 sm:p-8">
       <h2 class="font-display text-xl font-bold text-text">{c.helpTitle}</h2>
       <p class="mt-2.5 leading-relaxed text-text-muted">{c.helpBody}</p>
@@ -272,3 +356,145 @@ const c = copy[lang] ?? copy.en;
     </section>
   </article>
 </Base>
+
+<style is:global>
+  /* ---------------------------------------------------------------- *
+   *  Rendu du manuel importe.                                         *
+   *                                                                    *
+   *  Volontairement distinct de `.prose-nythrox` des fiches produit :  *
+   *  ce manuel contient des TABLEAUX et des listes NUMEROTEES, que ce  *
+   *  style-la ne gere pas. Sa puce carree s'appliquerait aux etapes    *
+   *  numerotees et effacerait les numeros.                             *
+   * ---------------------------------------------------------------- */
+  .docs-manual {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+  .docs-manual > * + * {
+    margin-top: 1.1em;
+  }
+  .docs-manual h2 {
+    color: var(--color-text);
+    font-family: var(--font-display, inherit);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 2.6em;
+    margin-bottom: 0.7em;
+    padding-top: 1.4em;
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+    /* L'en-tete du site est collante : sans cette marge, un titre atteint
+       par un lien du sommaire se retrouve cache dessous. */
+    scroll-margin-top: 5.5rem;
+  }
+  .docs-manual h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .docs-manual h3 {
+    color: var(--color-text);
+    font-size: 1.03rem;
+    font-weight: 600;
+    margin-top: 1.7em;
+    margin-bottom: 0.5em;
+    scroll-margin-top: 5.5rem;
+  }
+  .docs-manual strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .docs-manual a {
+    color: var(--color-accent-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .docs-manual ul {
+    list-style: none;
+    padding: 0;
+  }
+  .docs-manual ul > li {
+    position: relative;
+    padding-left: 1.4em;
+  }
+  .docs-manual ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0.15em;
+    top: 0.72em;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+  /* Les procedures pas a pas gardent leurs numeros : dans un manuel,
+     l'ordre des etapes porte du sens. */
+  .docs-manual ol {
+    list-style: decimal;
+    padding-left: 1.35em;
+  }
+  .docs-manual ol > li::marker {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .docs-manual li + li {
+    margin-top: 0.35em;
+  }
+  .docs-manual li > ul,
+  .docs-manual li > ol {
+    margin-top: 0.35em;
+  }
+  .docs-manual code {
+    background: var(--color-surface-2);
+    color: var(--color-accent-bright);
+    padding: 0.15em 0.4em;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+  .docs-manual pre {
+    background: var(--color-surface-2);
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .docs-manual pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+  /* Un tableau de reglages deborde sur telephone. Il defile DANS son
+     cadre, pour que la page elle-meme ne parte jamais en travers. */
+  .docs-manual table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .docs-manual th,
+  .docs-manual td {
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    padding: 0.55rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .docs-manual th {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .docs-manual blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+    color: var(--color-text-muted);
+  }
+  .docs-manual hr {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+    margin: 2.4em 0;
+  }
+</style>

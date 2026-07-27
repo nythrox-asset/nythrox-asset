@@ -11,7 +11,14 @@ const links = [
   { href: `${home}#about`, label: t('nav.about') },
   // Documentation et support sont annonces sur les fiches Fab : ils doivent
   // etre atteignables depuis n'importe quelle page, pas seulement l'accueil.
-  { href: localizePath('/docs/interactive-door-system', lang), label: t('nav.docs') },
+  //
+  // Docs MASQUEES du menu (decision Nathan 27/07/2026) : le seul manuel en
+  // ligne est celui du Door System, retire de la boutique tant que le plugin
+  // n'est pas publie. La page reste GENEREE et accessible par son URL directe
+  // (/docs/interactive-door-system), pour un acheteur a qui on la donnerait,
+  // mais elle n'est plus proposee a tous les visiteurs. Retirer le commentaire
+  // le jour de la publication.
+  // { href: localizePath('/docs/interactive-door-system', lang), label: t('nav.docs') },
   { href: localizePath('/support', lang), label: t('nav.support') },
 ];
 ---

@@ -9,12 +9,24 @@ category: Environment
 engine: Unreal Engine 5.8
 tags: [backrooms, level 0, hub, level 1, liminal, analog horror, megapack, offices, tunnel, service corridors, fluorescent, exploration, unreal, game ready]
 
-# Media : captures a ajouter des qu'elles sont prises.
-# cover: ./media/backrooms-megapack-cover.jpg
-# gallery:
-#   - ./media/backrooms-megapack-level0.jpg
-#   - ./media/backrooms-megapack-hub.jpg
-#   - ./media/backrooms-megapack-level1.jpg
+# Media : la cover est la planche a trois panneaux avec le titre. Le site ne
+# l'utilise JAMAIS en banniere (cover a texte), il prend la 1re de gallery :
+# le tunnel du Hub, l'image la plus forte du pack.
+cover: ./media/backrooms-megapack-cover.jpg
+gallery:
+  - ./media/backrooms-megapack-hub-tunnel.jpg
+  - ./media/backrooms-megapack-level0-hall.jpg
+  - ./media/backrooms-megapack-level0-wide.jpg
+  - ./media/backrooms-megapack-level0-corner.jpg
+  - ./media/backrooms-megapack-level0-elevator.jpg
+  - ./media/backrooms-megapack-hub-signs.jpg
+  - ./media/backrooms-megapack-hub-door.jpg
+  - ./media/backrooms-megapack-hub-lift.jpg
+  - ./media/backrooms-megapack-hub-curve.jpg
+  - ./media/backrooms-megapack-level1-corridor.jpg
+  - ./media/backrooms-megapack-level1-pipes.jpg
+  - ./media/backrooms-megapack-level1-storage.jpg
+  - ./media/backrooms-megapack-level1-pallets.jpg
 
 # Contenu livre
 demoMapIncluded: true

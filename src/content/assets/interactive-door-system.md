@@ -2,7 +2,11 @@
 title: Nythrox Interactive Door System
 tagline: "Turn any imported mesh into a working interactive door in under a minute, even when its pivot is broken."
 intro: "Nythrox Interactive Door System builds a virtual hinge from the door's real geometry, so meshes coming from CAD, scans, kitbashes or game exports open cleanly without a round-trip through Blender. Guided editor panel, in-editor preview before Play mode, locking, sounds, Blueprint events and replicated door state. A focused tool for doors, not a generic interaction framework."
-featured: true
+# Masque du site (decision Nathan 27/07/2026) : la fiche existe toujours et
+# reste modifiable, elle n'apparait simplement plus dans la boutique ni dans
+# les listes. Repasser a false le jour ou le plugin est publie sur Fab.
+draft: true
+featured: false
 order: 300
 date: 2026-07-27
 category: Plugin

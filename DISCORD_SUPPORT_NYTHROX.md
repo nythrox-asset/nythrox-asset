@@ -18,8 +18,9 @@ Discord, bouton `+` à gauche, **Créer mon propre serveur**, puis
 - **Icône** : `public/branding/nythrox_logo_transparent.png` de ce dépôt
 - **Langue du serveur** : English. Ta clientèle Fab est internationale.
 
-Dans **Paramètres du serveur → Activer le mode Communauté**. Ça débloque les
-salons d'annonces, les règles et l'AutoMod, et ça te fera gagner du temps.
+Le **mode Communauté** est activé par le script, tu n'as rien à faire à la
+main. Il débloque les salons d'annonces, auxquels d'autres serveurs peuvent
+s'abonner, ainsi que les règles et l'AutoMod.
 
 ---
 
@@ -31,7 +32,7 @@ Volontairement courte. Chaque salon a une raison d'exister.
 📣 INFORMATION
    #welcome            lecture seule, règles + comment demander de l'aide
    #announcements      salon d'ANNONCES (les gens peuvent s'y abonner)
-   #changelog          une entrée par version publiée
+   #changelog          salon d'ANNONCES, une entrée par version publiée
 
 🛠 SUPPORT
    #support-en         support en anglais
@@ -39,10 +40,24 @@ Volontairement courte. Chaque salon a une raison d'exister.
    #bug-reports        forum, un fil par bug
    #feature-requests   forum, un fil par idée, avec votes
 
-🎨 COMMUNITY
-   #showcase           ce que les gens construisent avec tes packs
+💬 COMMUNITY
+   #showcase           ce que les ACHETEURS construisent avec tes packs
    #general            discussion libre
+
+🔒 STAFF                (invisible pour @everyone)
+   #server-updates     avis de modération envoyés par Discord
+   #ticket-logs        transcriptions des tickets fermés
 ```
+
+**Pourquoi `#welcome` n'est pas un salon d'annonces.** C'est lui qui sert de
+salon de **règles** au sens de Discord, et Discord attend un salon texte
+ordinaire à cet endroit. Personne ne s'abonne à des règles, la conversion
+n'apporterait rien.
+
+**Pourquoi la catégorie STAFF est privée.** `#server-updates` est le salon où
+Discord dépose ses avis de modération. Ils te sont destinés, à toi seul, et
+n'ont rien à faire sous les yeux de tes acheteurs. Son existence est une
+condition obligatoire pour activer le mode Communauté.
 
 **Pourquoi des forums pour les bugs et les demandes.** Un salon de discussion
 classique noie un bug signalé il y a trois jours. Un forum garde un fil par
@@ -56,16 +71,28 @@ Balises à créer dans `#bug-reports` : `Door System`, `Selection & Assembly`,
 
 ## 3. Rôles
 
+Les trois rôles sont créés par le script.
+
 ```
-@Nythrox        toi. Administrateur.
+@Nythrox        toi. Affiché à part dans la liste des membres.
 @Verified buyer attribué à la main après vérification de la commande Fab
-@Member         tout le monde à l'arrivée
+@Member         rôle neutre, sans couleur ni mise en avant
 ```
 
 **Ne complique pas.** Un rôle acheteur vérifié suffit à faire la différence
 entre une question de curieux et une demande d'un client, et c'est ce qui
 justifie que tu répondes en priorité. Pour le vérifier : demande la référence
 de commande Fab en message privé, jamais en public.
+
+Deux choses restent à faire à la main, parce qu'un bot ne peut pas les faire :
+
+1. **Attribue-toi `@Nythrox`.** Le script crée le rôle mais ne peut pas te le
+   donner : un bot ne peut pas modifier le propriétaire du serveur. Clic droit
+   sur ton nom dans la liste des membres → Rôles → Nythrox. Sans ça, les
+   acheteurs ne verront pas qui répond officiellement.
+2. **Donne-lui les droits d'administration** si un jour tu ajoutes quelqu'un à
+   ton support. Tant que tu es seul, ce n'est pas nécessaire : le propriétaire
+   du serveur a tous les droits par construction.
 
 ---
 
@@ -168,8 +195,9 @@ Other                  le reste
 
 **Réglages qui comptent**
 
-- Salon de transcription : crée `#ticket-logs`, visible de toi seul. Sans ça,
-  tu perds l'historique dès qu'un ticket est fermé.
+- Salon de transcription : choisis `#ticket-logs`, déjà créé par le script dans
+  la catégorie STAFF et invisible pour les autres. Sans ce réglage, tu perds
+  l'historique dès qu'un ticket est fermé.
 - Rôle de support : `@Nythrox`. N'ajoute personne d'autre tant que tu es seul.
 - Message d'ouverture automatique : reprends la liste « à joindre dès le
   premier message » de la section 5, ça t'évite un aller-retour à chaque fois.

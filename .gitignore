@@ -21,3 +21,6 @@ public/downloads/
 
 # outillage local Claude Code, hors site
 .claude/
+
+# cache Python des scripts d'outillage
+__pycache__/

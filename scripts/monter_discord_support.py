@@ -11,9 +11,17 @@ le serveur vide toi-meme, en deux clics, et ce script pose tout le reste.
 
 Ce qu'il fait
 -------------
-Categories, salons (dont deux forums), roles, permissions de diffusion,
-balises de forum, et le message d'accueil. Idempotent : il compare par NOM et
-ne recree jamais ce qui existe deja, donc tu peux le relancer sans crainte.
+Roles, categories, salons (dont deux forums et une categorie STAFF privee),
+permissions, balises de forum, message d'accueil, et l'activation du mode
+COMMUNAUTE. Idempotent : il compare par NOM et ne recree jamais ce qui existe
+deja, donc tu peux le relancer sans crainte apres un echec.
+
+Ce qu'il change dans les REGLAGES de ton serveur
+------------------------------------------------
+L'activation du mode Communaute impose deux minimums a Discord, que le script
+applique donc : niveau de verification sur "email verifie", et filtre de
+contenu explicite sur "tous les membres". Ce sont des exigences de Discord,
+pas un choix : sans elles, l'API refuse d'activer le mode.
 
 Preparation, une seule fois
 ---------------------------
@@ -59,21 +67,40 @@ MANAGE_THREADS = 1 << 34
 # --------------------------------------------------------------------------
 # Le plan. Modifie ICI si tu veux une autre structure.
 # --------------------------------------------------------------------------
+# (nom, type, sujet, diffusion, prive)
+#   diffusion : @everyone lit mais n'ecrit pas.
+#   prive     : @everyone ne voit meme pas le salon, seul le role Nythrox.
 PLAN = [
     ("INFORMATION", [
-        ("welcome", ANNONCE, "Rules and how to ask for help", True),
-        ("announcements", ANNONCE, "Releases and important news", True),
-        ("changelog", ANNONCE, "One entry per published version", True),
+        # #welcome reste un salon TEXTE, meme en mode Communaute : c'est lui
+        # qui sert de salon de REGLES, et Discord attend un salon texte
+        # ordinaire a cet endroit. Personne ne s'abonne a des regles.
+        ("welcome", TEXTE, "Rules and how to ask for help", True, False),
+        ("announcements", ANNONCE, "Releases and important news", True, False),
+        ("changelog", ANNONCE, "One entry per published version", True, False),
     ]),
     ("SUPPORT", [
-        ("support-en", TEXTE, "Support in English", False),
-        ("support-fr", TEXTE, "Support en francais", False),
-        ("bug-reports", FORUM, "One thread per bug", False),
-        ("feature-requests", FORUM, "One thread per idea", False),
+        ("support-en", TEXTE, "Support in English", False, False),
+        ("support-fr", TEXTE, "Support en francais", False, False),
+        ("bug-reports", FORUM, "One thread per bug", False, False),
+        ("feature-requests", FORUM, "One thread per idea", False, False),
     ]),
     ("COMMUNITY", [
-        ("showcase", TEXTE, "What you built with Nythrox packs", False),
-        ("general", TEXTE, "Anything else", False),
+        # #showcase = ce que les ACHETEURS construisent avec les packs, pas la
+        # vitrine de Nythrox. A ne pas confondre avec le site nythrox-asset.com
+        # ni avec le lien "Showcase Video" des fiches Fab.
+        ("showcase", TEXTE, "Show what you built with Nythrox packs", False, False),
+        ("general", TEXTE, "Anything else", False, False),
+    ]),
+    ("STAFF", [
+        # Salon des avis de moderation de Discord. Il DOIT exister pour que le
+        # mode Communaute s'active, et il doit rester prive : Discord y depose
+        # des alertes qui te sont destinees, pas a tes acheteurs.
+        ("server-updates", TEXTE, "Discord moderation notices, staff only",
+         False, True),
+        # Transcriptions des tickets fermes. A renseigner dans Ticket Tool,
+        # sinon tu perds l'historique des le premier ticket ferme.
+        ("ticket-logs", TEXTE, "Ticket transcripts, staff only", False, True),
     ]),
 ]
 
@@ -84,8 +111,16 @@ BALISES_IDEES = ["Door System", "Selection & Assembly", "Asset pack",
                  "Planned", "Declined"]
 
 ROLES = [
-    # (nom, couleur, mentionnable)
-    ("Verified buyer", 0x3B82F6, False),
+    # (nom, couleur, mentionnable, affiche_separement)
+    # Nythrox : ton role de staff. Affiche a part dans la liste des membres,
+    # pour qu'un acheteur voie immediatement qui repond officiellement.
+    ("Nythrox", 0x1D4ED8, False, True),
+    # Verified buyer : attribue a la main apres verification de la commande
+    # Fab. C'est lui qui justifie une reponse prioritaire.
+    ("Verified buyer", 0x3B82F6, False, True),
+    # Member : role neutre, utile le jour ou tu voudras restreindre un salon
+    # sans toucher a @everyone. Sans couleur ni mise en avant.
+    ("Member", 0x000000, False, False),
 ]
 
 ACCUEIL = """**Welcome to Nythrox.**
@@ -150,7 +185,25 @@ def main(argv):
         print("MODE PLAN, rien ne sera ecrit. Ajoute --apply pour appliquer.\n")
 
     infos = appel("GET", "/guilds/%s" % guilde, jeton)
-    print("serveur : %s\n" % infos.get("name"))
+    print("serveur : %s" % infos.get("name"))
+
+    # Les salons d'ANNONCES (type 5) n'existent que sur un serveur en mode
+    # Communaute. Sur un serveur ordinaire, Discord refuse la creation avec
+    # 50035 "Value must be one of {0, 2, 4, 6, 13, 14, 15, 16}" : le type 5
+    # est absent de la liste, le 15 (forum) y est. Plutot que d'echouer au
+    # troisieme salon en laissant le serveur a moitie monte, on detecte et on
+    # retombe sur des salons texte, qui se convertissent en un clic apres coup.
+    communaute = "COMMUNITY" in (infos.get("features") or [])
+    if communaute:
+        print("mode    : Communaute active, salons d'annonces disponibles\n")
+    else:
+        print("mode    : serveur ORDINAIRE\n"
+              "          Les salons d'annonces ne sont pas disponibles ; ils\n"
+              "          seront crees en salons TEXTE, ce qui ne change rien\n"
+              "          a leur usage ni a leurs permissions.\n"
+              "          Pour les vrais salons d'annonces, auxquels les gens\n"
+              "          peuvent s'abonner : Parametres du serveur > Activer\n"
+              "          le mode Communaute, puis relance ce script.\n")
 
     existants = appel("GET", "/guilds/%s/channels" % guilde, jeton)
     par_nom = {c["name"]: c for c in existants}
@@ -159,15 +212,22 @@ def main(argv):
     everyone = roles_existants.get("@everyone", {}).get("id", guilde)
 
     # --- roles ---------------------------------------------------------
-    for nom, couleur, mentionnable in ROLES:
+    for nom, couleur, mentionnable, en_avant in ROLES:
         if nom in roles_existants:
             print("role      %-22s deja present" % nom)
             continue
         print("role      %-22s A CREER" % nom)
         if appliquer:
-            appel("POST", "/guilds/%s/roles" % guilde, jeton,
-                  {"name": nom, "color": couleur,
-                   "mentionable": mentionnable, "hoist": True})
+            roles_existants[nom] = appel(
+                "POST", "/guilds/%s/roles" % guilde, jeton,
+                {"name": nom, "color": couleur,
+                 "mentionable": mentionnable, "hoist": en_avant})
+            time.sleep(0.3)
+
+    # L'identifiant du role de staff sert a ouvrir les salons prives. Le
+    # proprietaire du serveur les voit de toute facon, mais le jour ou tu
+    # ajoutes quelqu'un, il suffira de lui donner ce role.
+    staff = roles_existants.get("Nythrox", {}).get("id")
 
     # --- categories et salons -------------------------------------------
     for categorie, salons in PLAN:
@@ -181,32 +241,89 @@ def main(argv):
                                {"name": categorie, "type": CATEGORIE})
                 par_nom[categorie] = parent
 
-        for nom, type_salon, sujet, diffusion in salons:
+        for nom, type_salon, sujet, diffusion, prive in salons:
             if nom in par_nom:
                 print("  salon   %-22s deja present" % nom)
                 continue
+            type_effectif = (TEXTE if type_salon == ANNONCE and not communaute
+                             else type_salon)
             etiquette = {ANNONCE: "annonce", FORUM: "forum",
-                         TEXTE: "texte"}[type_salon]
+                         TEXTE: "texte"}[type_effectif]
+            if prive:
+                etiquette += ", prive"
             print("  salon   %-22s A CREER (%s)" % (nom, etiquette))
             if not appliquer:
                 continue
-            charge = {"name": nom, "type": type_salon, "topic": sujet}
+            charge = {"name": nom, "type": type_effectif, "topic": sujet}
             if parent:
                 charge["parent_id"] = parent["id"]
-            if diffusion:
+            if prive:
+                # Salon prive : @everyone ne le voit pas du tout.
+                charge["permission_overwrites"] = [
+                    {"id": everyone, "type": 0, "deny": str(VIEW_CHANNEL)}]
+                if staff:
+                    charge["permission_overwrites"].append(
+                        {"id": staff, "type": 0, "allow": str(VIEW_CHANNEL)})
+            elif diffusion:
                 # Salon de diffusion : @everyone lit mais n'ecrit pas.
                 charge["permission_overwrites"] = [{
                     "id": everyone, "type": 0,
                     "allow": str(VIEW_CHANNEL),
                     "deny": str(SEND_MESSAGES),
                 }]
-            if type_salon == FORUM:
+            if type_effectif == FORUM:
                 balises = BALISES_BUGS if nom == "bug-reports" else BALISES_IDEES
                 charge["available_tags"] = [{"name": b, "moderated": False}
                                             for b in balises]
             salon = appel("POST", "/guilds/%s/channels" % guilde, jeton, charge)
             par_nom[nom] = salon
             time.sleep(0.4)
+
+    # --- mode Communaute ------------------------------------------------
+    # Discord n'accepte COMMUNITY que si QUATRE conditions sont reunies dans
+    # le meme appel : un salon de regles, un salon d'avis de moderation, une
+    # verification a LOW minimum, et le filtre de contenu sur tous les
+    # membres. On les fournit d'un bloc : envoyees separement, l'API refuse
+    # sans dire laquelle manque.
+    #
+    # C'est un reglage de TON serveur, donc en clair : ca met la verification
+    # sur "email verifie" et le filtre d'images sur "tous les membres". Ce
+    # sont les minimums exiges par Discord, pas un choix de ma part.
+    if appliquer and not communaute:
+        regles = par_nom.get("welcome")
+        avis = par_nom.get("server-updates")
+        if regles and avis:
+            print("\nmode Communaute : activation")
+            print("  regles             -> #welcome")
+            print("  avis de moderation -> #server-updates (prive)")
+            print("  verification       -> email verifie")
+            print("  filtre d'images    -> tous les membres")
+            appel("PATCH", "/guilds/%s" % guilde, jeton, {
+                "features": sorted(set(infos.get("features") or []) |
+                                   {"COMMUNITY"}),
+                "rules_channel_id": regles["id"],
+                "public_updates_channel_id": avis["id"],
+                "verification_level": 1,
+                "explicit_content_filter": 2,
+            })
+            communaute = True
+            print("  active.")
+            # Les salons declares ANNONCE, crees en texte faute de mode
+            # Communaute, deviennent de vrais salons d'annonces : les autres
+            # serveurs peuvent s'y abonner et republier tes sorties chez eux.
+            for _categorie, salons in PLAN:
+                for nom, type_salon, _sujet, _diff, _prive in salons:
+                    salon = par_nom.get(nom)
+                    if (type_salon == ANNONCE and salon
+                            and salon.get("type") != ANNONCE):
+                        appel("PATCH", "/channels/%s" % salon["id"], jeton,
+                              {"type": ANNONCE})
+                        salon["type"] = ANNONCE
+                        print("  #%-16s converti en salon d'annonces" % nom)
+                        time.sleep(0.3)
+        else:
+            print("\nmode Communaute : NON active, il manque #welcome ou "
+                  "#server-updates")
 
     # --- message d'accueil ------------------------------------------------
     accueil = par_nom.get("welcome")

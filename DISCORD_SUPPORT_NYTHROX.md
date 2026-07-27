@@ -137,10 +137,77 @@ message « bientôt disponible ». Rien d'autre à faire.
 
 ---
 
-## 8. Ce que je n'ai pas mis, et pourquoi
+## 8. Tickets privés — Ticket Tool
 
-- **Pas de bot de tickets.** Utile à partir de plusieurs dizaines de demandes
-  par semaine. En dessous, un forum fait le même travail sans dépendance.
+Décision Nathan du 27/07/2026 : **Ticket Tool pour l'instant**, le bot maison
+reste en réserve (voir la section 9).
+
+Le forum public et les tickets privés ne font pas le même travail, et tu gardes
+les deux. Le forum sert aux problèmes techniques, dont les réponses profitent
+aux suivants. Le ticket privé sert à ce qui ne se dit pas en public :
+facturation, licence, numéro de commande.
+
+**Installation**
+
+1. `tickettool.xyz` → Invite → choisis ton serveur.
+2. Sur leur tableau de bord, crée un **panel** dans un salon `#open-a-ticket`
+   que tu ajoutes à la catégorie SUPPORT.
+3. Titre du panel : `Private ticket`.
+   Description : `For invoicing, licensing or order questions. For technical
+   problems, use the bug-reports forum instead: answers there help everyone.`
+
+**Les causes du menu déroulant**
+
+```
+Door System            un problème sur le plugin de portes
+Selection & Assembly   un problème sur le plugin d'assemblage
+Asset pack             un problème sur un pack d'environnement
+Invoicing / licence    facturation, licence, transfert
+Other                  le reste
+```
+
+**Réglages qui comptent**
+
+- Salon de transcription : crée `#ticket-logs`, visible de toi seul. Sans ça,
+  tu perds l'historique dès qu'un ticket est fermé.
+- Rôle de support : `@Nythrox`. N'ajoute personne d'autre tant que tu es seul.
+- Message d'ouverture automatique : reprends la liste « à joindre dès le
+  premier message » de la section 5, ça t'évite un aller-retour à chaque fois.
+- Limite d'un ticket ouvert par personne, pour éviter les doublons.
+
+**La limite à connaître** : les causes ci-dessus se saisissent **à la main**
+dans leur interface. Elles ne se synchronisent pas avec tes produits. Tu en
+ajouteras une les deux ou trois fois par an où tu sors un produit. C'est le
+prix à payer pour ne rien avoir à héberger ni maintenir.
+
+---
+
+## 9. En réserve : le bot maison
+
+À ressortir le jour où la liste de causes à tenir à la main devient pénible,
+en pratique autour de dix produits, ou si le volume de demandes augmente.
+
+Ce qu'il apporterait, et que Ticket Tool ne peut pas faire :
+
+- **Causes synchronisées** avec `public/products.json`, déjà généré à chaque
+  publication par `scripts/annoncer_nouveaux_produits.py`. Un nouveau produit
+  apparaîtrait tout seul dans le menu du ticket.
+- Vérification du numéro de commande, statistiques, relances automatiques.
+
+Ce qu'il coûte, et pourquoi il attend :
+
+- Un bot qui répond à des clics doit être **en ligne en permanence**. Ce n'est
+  pas un script lancé à la demande, c'est un service à héberger, surveiller et
+  maintenir quand Discord fait évoluer son API.
+- Tant que le gain est « ajouter une ligne dans un formulaire deux fois par
+  an », le rapport est mauvais.
+
+Le morceau difficile est déjà fait : `products.json` existe et se met à jour
+tout seul. Le jour venu, il ne restera que le bot à écrire et à héberger.
+
+---
+
+## 10. Ce que je n'ai pas mis, et pourquoi
 - **Pas de salon par produit.** Tu en as deux. Les balises du forum suffisent
   et évitent des salons déserts, qui donnent l'impression d'un produit mort.
 - **Pas de vérification automatique des achats.** Fab ne fournit pas d'API

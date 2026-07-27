@@ -1,0 +1,47 @@
+# Annonce dans Discord les produits ajoutes a chaque push sur master.
+#
+# Le secret DISCORD_WEBHOOK_URL se cree une seule fois :
+#   Discord   : salon #announcements > Modifier > Integrations > Webhooks
+#               > Nouveau webhook > Copier l'URL
+#   GitHub    : depot > Settings > Secrets and variables > Actions
+#               > New repository secret, nom DISCORD_WEBHOOK_URL
+#
+# Un webhook n'est PAS un jeton de bot : il ne peut qu'ecrire dans le salon
+# choisi. C'est volontaire, ca limite les degats en cas de fuite.
+
+name: Annonce Discord
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src/content/assets/**.md'
+
+# Deux pushs rapprochés ne doivent pas annoncer deux fois le meme produit.
+concurrency:
+  group: annonce-discord
+  cancel-in-progress: false
+
+jobs:
+  annoncer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Il faut le commit precedent pour savoir ce qui est NOUVEAU.
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Annoncer les nouveaux produits
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL absent : simulation seulement."
+            python scripts/annoncer_nouveaux_produits.py --depuis HEAD~1
+          else
+            python scripts/annoncer_nouveaux_produits.py --depuis HEAD~1 --envoyer
+          fi

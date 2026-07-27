@@ -1,0 +1,24 @@
+{
+  "produits": [
+    {
+      "slug": "backrooms-level-94",
+      "title": "Backrooms Level 94 Suburban Neighborhood Environment",
+      "category": "Environment"
+    },
+    {
+      "slug": "minimal-sample",
+      "title": "Minimal Sample Pack",
+      "category": "Props"
+    },
+    {
+      "slug": "interactive-door-system",
+      "title": "Nythrox Interactive Door System",
+      "category": "Plugin"
+    },
+    {
+      "slug": "stylized-town",
+      "title": "Stylized Town Environment",
+      "category": "Environment"
+    }
+  ]
+}

@@ -32,7 +32,9 @@ overviewMapIncluded: true
 
 # Commercial
 fabUrl: https://www.fab.com/listings/86baff52-7d4a-4629-b297-e6588ea2460b
-demoDownloadUrl: /downloads/Backrooms_Level_94_Demo_Windows.zip
+# Les builds sont trop lourds pour Netlify (10 Mo recommandes par fichier),
+# ils sont donc servis par la release GitHub demos-v1.
+demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/Backrooms_Level_94_Demo_Windows.zip
 demoDownloadNote: Windows · 518 MB
 
 features:

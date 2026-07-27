@@ -38,8 +38,9 @@ overviewMapIncluded: false
 # pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
 # fabUrl: https://www.fab.com/listings/0a6661c0-47c1-4ab6-9eba-1a667758aec4
 
-# Demo jouable, hebergee sur le site comme pour level94.
-demoDownloadUrl: /downloads/Backrooms_Megapack_Demo_Windows.zip
+# Demo jouable servie par la release GitHub demos-v1 : les builds sont trop
+# lourds pour Netlify, qui recommande de rester sous 10 Mo par fichier.
+demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/Backrooms_Megapack_Demo_Windows.zip
 demoDownloadNote: Windows · 434 MB
 
 features:

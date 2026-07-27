@@ -23,8 +23,9 @@ gallery:
 demoMapIncluded: false
 overviewMapIncluded: false
 
-# Demo jouable, hebergee sur le site comme pour level94.
-demoDownloadUrl: /downloads/MetroLevel_Demo_Windows.zip
+# Demo jouable servie par la release GitHub demos-v1 : les builds sont trop
+# lourds pour Netlify, qui recommande de rester sous 10 Mo par fichier.
+demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/MetroLevel_Demo_Windows.zip
 demoDownloadNote: Windows · 409 MB
 
 # Commercial : renseigner fabUrl avec l'URL PUBLIQUE (www.fab.com/listings/<id>),

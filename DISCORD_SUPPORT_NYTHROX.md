@@ -133,14 +133,24 @@ Retire à `@everyone`, sur tout le serveur : **Mentionner @everyone**,
 
 ---
 
-## 6. AutoMod, trois règles qui suffisent
+## 6. AutoMod, quatre règles qui suffisent
 
-Paramètres du serveur → **AutoMod**.
+Créées par le script, rien à cliquer. Tu les retrouves dans Paramètres du
+serveur → AutoMod si tu veux les ajuster.
 
-1. **Bloquer les liens d'invitation Discord** — évite le démarchage.
-2. **Bloquer le spam** — règle intégrée, active-la telle quelle.
-3. **Mots bloqués** : `free download`, `crack`, `cracked`, `torrent`, `nulled`.
-   Action : bloquer le message et t'alerter.
+1. **Pas d'invitations** vers d'autres serveurs, ce qui évite le démarchage.
+2. **Anti-spam**, la règle intégrée de Discord, entraînée sur son propre trafic.
+3. **Pas de piratage** : `free download`, `cracked`, `torrent`, `nulled`,
+   `keygen`, `warez`. Message bloqué et alerte dans `#server-updates`.
+4. **Vagues de mentions** : un message citant plus de cinq personnes est bloqué.
+
+Les alertes vont dans `#server-updates`, qui est privé. Une alerte de
+modération affichée en public apprend surtout aux curieux quels mots
+déclenchent quoi.
+
+**Une seule chose à savoir si tu veux en ajouter** : Discord limite à six
+règles à mots-clés par serveur, une seule anti-spam et une seule pour les
+mentions. Le script en consomme deux sur six, une sur une et une sur une.
 
 ---
 

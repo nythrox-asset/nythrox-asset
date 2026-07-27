@@ -123,6 +123,56 @@ ROLES = [
     ("Member", 0x000000, False, False),
 ]
 
+# --------------------------------------------------------------------------
+# AutoMod. Quatre regles, pas trente : chaque regle en trop finit par bloquer
+# un acheteur de bonne foi, et c'est toi qui passes ensuite dix minutes a
+# comprendre pourquoi son message n'est jamais arrive.
+#
+# Valeurs de l'API, verifiees sur la documentation Discord du 27/07/2026
+# (docs.discord.com/developers/resources/auto-moderation), parce que de
+# memoire je les avais fausses :
+#   trigger_type  1 = KEYWORD, 3 = SPAM, 4 = KEYWORD_PRESET,
+#                 5 = MENTION_SPAM, 6 = MEMBER_PROFILE
+#   action.type   1 = bloquer le message, 2 = alerter dans un salon,
+#                 3 = exclusion temporaire, 4 = blocage des interactions
+# Il n'existe AUCUN declencheur "lien d'invitation" : ca se fait avec une
+# regle a mots-cles et une expression reguliere.
+#
+# Quotas par serveur : 6 regles KEYWORD, 1 SPAM, 1 MENTION_SPAM. On en
+# consomme 2 sur 6, 1 sur 1 et 1 sur 1.
+# --------------------------------------------------------------------------
+MOTS_PIRATAGE = ["free download", "cracked", "torrent", "nulled",
+                 "keygen", "warez"]
+
+# `(?i)` rend l'expression insensible a la casse. Pas de lookahead ni de
+# lookbehind : le moteur de Discord est celui de Rust, qui ne les gere pas.
+INVITATIONS = [
+    r"(?i)discord(app)?\.(gg|com/invite|me)/[a-z0-9_-]+",
+    r"(?i)(dsc|invite)\.gg/[a-z0-9_-]+",
+]
+
+AUTOMOD = [
+    # (nom, trigger_type, trigger_metadata, alerter, explication)
+    #
+    # Le demarchage par invitation est le premier parasite d'un serveur de
+    # support qui commence a etre visible.
+    ("Nythrox - pas d'invitations", 1, {"regex_patterns": INVITATIONS}, True,
+     "bloque les invitations vers d'autres serveurs"),
+    # Regle integree, entrainee par Discord sur son propre trafic. Rien a
+    # regler, et elle attrape ce qu'une liste de mots ne verra jamais.
+    ("Nythrox - anti-spam", 3, None, False,
+     "bloque le spam, detection integree de Discord"),
+    # Le piratage se demande presque toujours avec les memes mots. On bloque
+    # le message ET on t'alerte : celui qui demande revient souvent.
+    ("Nythrox - pas de piratage", 1, {"keyword_filter": MOTS_PIRATAGE}, True,
+     "bloque les demandes de version piratee et t'alerte"),
+    # Une vague de mentions est la facon la plus simple de pourrir un serveur
+    # ouvert. Cinq personnes citees dans un message suffisent largement pour
+    # du support.
+    ("Nythrox - vagues de mentions", 5, {"mention_total_limit": 5}, True,
+     "bloque les messages citant plus de 5 personnes"),
+]
+
 ACCUEIL = """**Welcome to Nythrox.**
 Environments, modular kits and tools for Unreal Engine.
 
@@ -324,6 +374,37 @@ def main(argv):
         else:
             print("\nmode Communaute : NON active, il manque #welcome ou "
                   "#server-updates")
+
+    # --- AutoMod ----------------------------------------------------------
+    # Les alertes vont dans le salon STAFF : une alerte de moderation affichee
+    # en public apprend surtout aux curieux quels mots declenchent quoi.
+    alerte = par_nom.get("server-updates")
+    regles_existantes = {
+        r["name"] for r in
+        (appel("GET", "/guilds/%s/auto-moderation/rules" % guilde, jeton) or [])
+    }
+    for nom, declencheur, metadonnees, alerter, explication in AUTOMOD:
+        if nom in regles_existantes:
+            print("automod   %-28s deja presente" % nom)
+            continue
+        print("automod   %-28s A CREER  (%s)" % (nom, explication))
+        if not appliquer:
+            continue
+        # Le message de refus est limite a 150 caracteres par l'API, et il
+        # est lu par un acheteur : il doit dire quoi faire, pas juste "non".
+        actions = [{"type": 1, "metadata": {"custom_message":
+                    "Blocked by the server rules. If this was a genuine "
+                    "support question, post it again without links."}}]
+        if alerter and alerte:
+            actions.append({"type": 2,
+                            "metadata": {"channel_id": alerte["id"]}})
+        charge = {"name": nom, "event_type": 1, "trigger_type": declencheur,
+                  "enabled": True, "actions": actions}
+        if metadonnees:
+            charge["trigger_metadata"] = dict(metadonnees)
+        appel("POST", "/guilds/%s/auto-moderation/rules" % guilde, jeton,
+              charge)
+        time.sleep(0.3)
 
     # --- message d'accueil ------------------------------------------------
     accueil = par_nom.get("welcome")

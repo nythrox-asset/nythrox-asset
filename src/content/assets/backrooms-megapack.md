@@ -18,12 +18,14 @@ gallery:
   - ./media/backrooms-megapack-level0-hall.jpg
   - ./media/backrooms-megapack-level0-wide.jpg
   - ./media/backrooms-megapack-level0-corner.jpg
+  - ./media/backrooms-megapack-level0-low.jpg
   - ./media/backrooms-megapack-level0-elevator.jpg
   - ./media/backrooms-megapack-hub-signs.jpg
   - ./media/backrooms-megapack-hub-door.jpg
   - ./media/backrooms-megapack-hub-lift.jpg
   - ./media/backrooms-megapack-hub-curve.jpg
   - ./media/backrooms-megapack-level1-corridor.jpg
+  - ./media/backrooms-megapack-level1-crates.jpg
   - ./media/backrooms-megapack-level1-pipes.jpg
   - ./media/backrooms-megapack-level1-storage.jpg
   - ./media/backrooms-megapack-level1-pallets.jpg

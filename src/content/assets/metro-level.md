@@ -9,7 +9,10 @@ category: Environment
 engine: Unreal Engine 5.8
 tags: [metro, subway, underground, station, platform, liminal, horror, red light, japanese, corridors, train, exploration, unreal, game ready]
 
-cover: ./media/metro-level-platform-train.jpg
+# Media : la cover est la planche a texte "METRO LEVEL". Le site ne l'utilise
+# JAMAIS en banniere (cover a texte), il prend la 1re de gallery : la meme vue
+# du quai, sans le titre, juste le logo.
+cover: ./media/metro-level-cover.jpg
 gallery:
   - ./media/metro-level-platform-train.jpg
   - ./media/metro-level-tunnel.jpg

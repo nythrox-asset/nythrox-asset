@@ -30,7 +30,10 @@ overviewMapIncluded: false
 # pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
 # fabUrl:
 
-# Pas de demo jouable : aucun build n'est heberge pour cette map.
+# Demo jouable servie par la release GitHub demos-v1 : les builds sont trop
+# lourds pour Netlify, qui recommande de rester sous 10 Mo par fichier.
+demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/Backrooms_Poolrooms_Demo_Windows.zip
+demoDownloadNote: Windows · 384 MB
 
 features:
   - "Five connected zones: main pool hall, flooded pillar hall, portal arcade, upper balcony walkway, and a ramp descending into deep water"
@@ -39,6 +42,7 @@ features:
   - "32 ambient Niagara effects rebuilt in Unreal, no rig required"
   - "Custom collision proxies on 833 pieces of playable geometry"
   - "Single Layer Water surface with depth based absorption, the pool reads clear at the edge and turquoise at the bottom"
+  - "Playable Windows demo available on this page, walk the whole complex before buying"
   - "Complete Unreal Engine project: open and play immediately, no import steps required"
 
 includes: "Unreal Engine 5.8 project (Complete project), Blender source file (.blend), and GLB."
@@ -70,6 +74,7 @@ i18n:
       - "32 effets Niagara d'ambiance reconstruits sous Unreal, sans rig"
       - "Collisions personnalisées sur 833 pièces de géométrie jouable"
       - "Surface d'eau Single Layer Water avec absorption selon la profondeur : claire au bord, turquoise au fond"
+      - "Démo Windows jouable disponible sur cette page, parcourez tout le complexe avant d'acheter"
       - "Projet Unreal Engine complet : à ouvrir et jouer immédiatement, sans étape d'import"
     includes: "Projet Unreal Engine 5.8 (Complete project), fichier source Blender (.blend) et GLB."
     notes: "Ce pack contient uniquement la géométrie d'environnement, aucun personnage, créature ou événement scripté n'est inclus. Les portes sont de la géométrie statique ; la fonctionnalité de porte interactive nécessite le plugin Nythrox Interactive Door, vendu séparément. Pas de LOD dans cette version, et la surface d'eau est un plan sans déplacement de vagues."
@@ -85,6 +90,7 @@ i18n:
       - "32 efectos Niagara ambientales reconstruidos en Unreal, sin rig"
       - "Colisiones personalizadas en 833 piezas de geometría jugable"
       - "Superficie de agua Single Layer Water con absorción según la profundidad: clara en el borde, turquesa en el fondo"
+      - "Demo jugable de Windows disponible en esta página, recorre todo el complejo antes de comprar"
       - "Proyecto Unreal Engine completo: ábrelo y juega de inmediato, sin pasos de importación"
     includes: "Proyecto Unreal Engine 5.8 (Complete project), archivo fuente Blender (.blend) y GLB."
     notes: "Este pack contiene únicamente la geometría del entorno, no incluye personajes, criaturas ni eventos con scripts. Las puertas son geometría estática; la funcionalidad de puerta interactiva requiere el plugin Nythrox Interactive Door, vendido por separado. Sin LOD en esta versión, y la superficie del agua es un plano sin desplazamiento de olas."

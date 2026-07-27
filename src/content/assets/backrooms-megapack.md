@@ -38,9 +38,9 @@ overviewMapIncluded: false
 # pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
 # fabUrl: https://www.fab.com/listings/0a6661c0-47c1-4ab6-9eba-1a667758aec4
 
-# Demo jouable : a activer quand le build est heberge, comme pour level94.
-# demoDownloadUrl: /downloads/Backrooms_Megapack_Demo_Windows.zip
-# demoDownloadNote: Windows · <taille reelle>
+# Demo jouable, hebergee sur le site comme pour level94.
+demoDownloadUrl: /downloads/Backrooms_Megapack_Demo_Windows.zip
+demoDownloadNote: Windows · 434 MB
 
 features:
   - "Three connected areas with distinct palettes: mustard wallpaper and dark baseboards, poured concrete and asphalt, exposed brick and pale pipework"

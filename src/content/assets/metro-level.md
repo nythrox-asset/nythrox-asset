@@ -33,7 +33,7 @@ demoDownloadNote: Windows · 409 MB
 
 # Commercial : renseigner fabUrl avec l'URL PUBLIQUE (www.fab.com/listings/<id>),
 # pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
-# fabUrl:
+fabUrl: https://www.fab.com/listings/e1a16a1d-0bf8-40eb-953b-6adf9a383a7d
 
 features:
   - "Complete station in one piece: platform with a train carriage, long tile corridors, waiting areas with seating, lift, roller shutters and stairwells"

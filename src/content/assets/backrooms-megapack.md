@@ -36,7 +36,9 @@ overviewMapIncluded: false
 
 # Commercial : renseigner fabUrl avec l'URL PUBLIQUE (www.fab.com/listings/<id>),
 # pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
-# fabUrl: https://www.fab.com/listings/0a6661c0-47c1-4ab6-9eba-1a667758aec4
+# 2026-07-29 : l'ancienne valeur commentee (0a6661c0-...) est remplacee par
+# l'URL publique donnee par Nathan.
+fabUrl: https://www.fab.com/listings/fed7a0f3-110e-4853-8e6a-a5d4ee8abc22
 
 # Demo jouable servie par la release GitHub demos-v1 : les builds sont trop
 # lourds pour Netlify, qui recommande de rester sous 10 Mo par fichier.

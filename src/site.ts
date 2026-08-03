@@ -30,8 +30,14 @@ export const SITE = {
    *  pire que pas de bouton du tout.                                  *
    * ---------------------------------------------------------------- */
   support: {
-    /** Invitation PERMANENTE (Discord > Inviter > Modifier > Jamais). */
-    discordInvite: '',
+    /**
+     * Identifiant Discord de Nathan, donne a l'acheteur qui veut discuter.
+     * Decision du 29/07/2026 : PAS de serveur. Un serveur demande des salons a
+     * moderer, un outil de tickets et une presence a tenir ; un identifiant se
+     * donne en une ligne. Vide = la page n'affiche rien plutot qu'un contact
+     * mort.
+     */
+    discordHandle: 'nythrox_asset',
     /** Adresse de repli pour ceux qui n'utilisent pas Discord. */
     email: '',
     /** Delai de reponse annonce. Ne promets que ce que tu tiens. */

@@ -2,9 +2,9 @@
 /* ------------------------------------------------------------------ *
  *  Page de support, annoncee sur les fiches Fab.                       *
  *                                                                      *
- *  Regle tenue ici : si SITE.support.discordInvite est vide, on        *
- *  n'affiche PAS un bouton mort. Un acheteur qui clique dans le vide   *
- *  perd confiance plus surement que s'il lit "bientot disponible".     *
+ *  29/07/2026 : PAS de serveur Discord. On donne l'identifiant de       *
+ *  Nathan, a qui veut discuter. Regle conservee : si le champ est vide, *
+ *  on n'affiche PAS un contact mort.                                    *
  * ------------------------------------------------------------------ */
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site';
@@ -14,7 +14,7 @@ import { toLang } from '../i18n/utils';
 // localisee n'est qu'une enveloppe d'une ligne.
 const lang = toLang(Astro.currentLocale);
 
-const hasDiscord = Boolean(SITE.support.discordInvite);
+const hasDiscord = Boolean(SITE.support.discordHandle);
 const hasEmail = Boolean(SITE.support.email);
 
 const copy = {
@@ -22,12 +22,12 @@ const copy = {
     kicker: 'Support',
     title: 'Get help with your pack',
     lead:
-      'Every Nythrox product is supported by a real person. Join the Discord, describe what you are seeing, and you get an answer.',
+      'Every Nythrox product is supported by a real person. Message me on Discord, describe what you are seeing, and you get an answer.',
     discordTitle: 'Discord — the fastest route',
     discordBody:
-      'Bug reports, integration questions, feature requests. Dedicated channels per product, a searchable FAQ, and announcements when a pack is updated.',
-    discordCta: 'Join the Discord',
-    discordSoon: 'Invite link coming shortly.',
+      'Add me and write directly: bug reports, integration questions, feature requests. No ticket queue, no bot, you get me.',
+    discordCta: 'My Discord',
+    discordSoon: 'Discord contact coming shortly.',
     emailTitle: 'Prefer email?',
     emailBody: 'For invoicing, licensing or anything you would rather not post publicly.',
     responseTitle: 'Response time',
@@ -55,12 +55,12 @@ const copy = {
     kicker: 'Support',
     title: 'De l’aide sur ton pack',
     lead:
-      'Chaque produit Nythrox est suivi par une vraie personne. Rejoins le Discord, décris ce que tu vois, tu auras une réponse.',
+      'Chaque produit Nythrox est suivi par une vraie personne. Écris-moi sur Discord, décris ce que tu vois, tu auras une réponse.',
     discordTitle: 'Discord, le chemin le plus rapide',
     discordBody:
-      'Signalements de bugs, questions d’intégration, demandes de fonctionnalités. Un canal par produit, une FAQ consultable, et les annonces de mise à jour.',
-    discordCta: 'Rejoindre le Discord',
-    discordSoon: 'Lien d’invitation bientôt disponible.',
+      'Ajoute-moi et écris directement : bugs, questions d’intégration, demandes de fonctionnalités. Pas de file de tickets, pas de bot, tu m’as moi.',
+    discordCta: 'Mon Discord',
+    discordSoon: 'Contact Discord bientôt disponible.',
     emailTitle: 'Tu préfères l’e-mail ?',
     emailBody: 'Pour la facturation, la licence, ou tout ce que tu ne veux pas écrire en public.',
     responseTitle: 'Délai de réponse',
@@ -88,12 +88,12 @@ const copy = {
     kicker: 'Soporte',
     title: 'Ayuda con tu pack',
     lead:
-      'Cada producto Nythrox tiene detrás a una persona real. Entra en el Discord, describe lo que ves y tendrás respuesta.',
+      'Cada producto Nythrox tiene detrás a una persona real. Escríbeme por Discord, describe lo que ves y tendrás respuesta.',
     discordTitle: 'Discord, la vía más rápida',
     discordBody:
-      'Informes de errores, preguntas de integración, peticiones de funciones. Un canal por producto, FAQ consultable y avisos de actualización.',
-    discordCta: 'Entrar en Discord',
-    discordSoon: 'Enlace de invitación disponible en breve.',
+      'Añádeme y escribe directamente: errores, preguntas de integración, peticiones de funciones. Sin cola de tickets, sin bot, hablas conmigo.',
+    discordCta: 'Mi Discord',
+    discordSoon: 'Contacto de Discord disponible en breve.',
     emailTitle: '¿Prefieres el correo?',
     emailBody: 'Para facturación, licencias o cualquier cosa que no quieras publicar.',
     responseTitle: 'Tiempo de respuesta',
@@ -138,17 +138,19 @@ const c = copy[lang] ?? copy.en;
     <p class="mt-2.5 leading-relaxed text-text-muted">{c.discordBody}</p>
     {
       hasDiscord ? (
-        <a
-          href={SITE.support.discordInvite}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-deep"
-        >
+        /*
+         * Un identifiant Discord n'est PAS une adresse cliquable : le lien
+         * discord.com/users/<id> exige l'identifiant NUMERIQUE, pas le nom
+         * d'utilisateur. On affiche donc le nom tel quel, a copier, plutot
+         * qu'un lien qui tomberait dans le vide.
+         */
+        <p class="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white">
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true">
             <path d="M19.3 5.3A16.4 16.4 0 0 0 15.2 4l-.2.4a15 15 0 0 1 3.6 1.2 12.9 12.9 0 0 0-11.2 0A15 15 0 0 1 11 4.4L10.8 4a16.4 16.4 0 0 0-4.1 1.3C3.5 10 2.7 14.5 3.1 19a16.5 16.5 0 0 0 5 2.5l.6-1a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.8 11.8 0 0 0 9.2 0l.4.3a10.8 10.8 0 0 1-1.7.8l.6 1a16.5 16.5 0 0 0 5-2.5c.5-5.2-.8-9.6-3.6-13.7ZM9.3 16.2c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z" />
           </svg>
-          {c.discordCta}
-        </a>
+          <span class="sr-only">{c.discordCta}</span>
+          <code class="font-mono tracking-tight">{SITE.support.discordHandle}</code>
+        </p>
       ) : (
         <p class="mt-5 inline-flex items-center gap-2 rounded-lg border border-dashed border-border px-4 py-2.5 text-sm font-medium text-text-muted">
           {c.discordSoon}

@@ -1,22 +1,67 @@
 ---
+/* Bande d'arguments sous le carrousel.
+   Avant : une ligne de texte gris, tassee, separee par des tirets, que l'oeil
+   sautait. Maintenant : quatre blocs avec une icone coloree, un titre en gras
+   et sa precision. Chaque argument a sa couleur pour qu'on les distingue d'un
+   coup d'oeil. Les quatre teintes sont choisies claires : elles doivent tenir
+   sur le navy de la page. */
 import { toLang, useTranslations } from '../i18n/utils';
 
 const lang = toLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const items = ['ready', 'source', 'organized', 'collision'] as const;
+type Item = { key: string; color: string; path: string };
+
+const items: Item[] = [
+  {
+    key: 'ready',
+    color: 'var(--color-accent-bright)',
+    // eclair : ca tourne tout de suite
+    path: 'M13 2 4 14h6l-1 8 9-12h-6z',
+  },
+  {
+    key: 'source',
+    color: 'var(--color-tint-teal)',
+    // empilement : les fichiers source livres sous la surface
+    path: 'M12 3 3 8l9 5 9-5zM3 12l9 5 9-5M3 16.5l9 5 9-5',
+  },
+  {
+    key: 'organized',
+    color: 'var(--color-tint-amber)',
+    // dossier : une seule racine, rangee
+    path: 'M3 7a2 2 0 0 1 2-2h3.6l2 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+  },
+  {
+    key: 'collision',
+    color: 'var(--color-tint-violet)',
+    // bouclier coche : verifie, mesh par mesh
+    path: 'M12 3l7.5 3v5.6c0 4.6-3.1 7.8-7.5 9.4-4.4-1.6-7.5-4.8-7.5-9.4V6zm-2.6 8.8 2 2 4.2-4.2',
+  },
+];
 ---
 
-<ul class="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[13px] text-text-faint">
+<ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
   {
-    items.map((key, i) => (
-      <>
-        {i > 0 && <li aria-hidden="true" class="select-none text-text-faint/60">·</li>}
-        <li>
-          <span class="text-text-muted">{t(`trust.${key}.title` as any)}</span>
-          <span class="hidden sm:inline"> — {t(`trust.${key}.desc` as any)}</span>
-        </li>
-      </>
+    items.map(({ key, color, path }) => (
+      <li
+        class="flex items-start gap-3.5 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-border-strong"
+        style={`--item-color: ${color};`}
+      >
+        <span
+          aria-hidden="true"
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--item-color)_16%,transparent)] text-[var(--item-color)]"
+        >
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d={path} stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <div class="min-w-0">
+          <p class="font-display text-[15px] font-bold leading-tight text-text">
+            {t(`trust.${key}.title` as any)}
+          </p>
+          <p class="mt-1 text-[13px] leading-snug text-text-muted">{t(`trust.${key}.desc` as any)}</p>
+        </div>
+      </li>
     ))
   }
 </ul>

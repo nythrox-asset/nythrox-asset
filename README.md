@@ -1,4 +1,4 @@
-# Nythrox — vitrine Fab
+# Nythrox, vitrine Fab
 
 Site vitrine statique (Astro) pour présenter tes packs d'assets et renvoyer vers
 tes fiches **Fab**. Piloté par les données : **un fichier = un asset**, et tout
@@ -47,7 +47,7 @@ npm run preview    # prévisualise le build de production
 > **Vidéo YouTube** : renseigne `youtube:` (ID ou URL) et une vidéo à chargement
 > léger remplace la cover en tête de fiche. `playableDemoUrl` est réservé à une
 > **vraie** démo jouable en ligne (itch.io, build web…), pas à une map livrée
-> dans le pack — pour ça, utilise `demoMapIncluded: true`.
+> dans le pack. Pour ça, utilise `demoMapIncluded: true`.
 
 ---
 
@@ -93,7 +93,7 @@ perso `nythrox-asset.com` se branche chez n'importe quel hébergeur.
 2. Build command : `npm run build` · Publish directory : `dist`.
 3. Ajoute le domaine `nythrox-asset.com` dans les réglages du projet et suis les
    instructions DNS. Le fichier `public/CNAME` est ignoré par ces plateformes,
-   sans effet — inoffensif.
+   sans effet, inoffensif.
 
 **GitHub Pages**
 1. Repo GitHub, active Pages (source : GitHub Actions, workflow Astro).

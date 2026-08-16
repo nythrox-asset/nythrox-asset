@@ -17,7 +17,7 @@ const localeOverride = z.object({
  *  Un fichier .md par asset dans src/content/assets/.                 *
  *                                                                     *
  *  Presque TOUT est optionnel : si tu ne renseignes pas un champ,     *
- *  la section correspondante ne s'affiche simplement pas — la fiche   *
+ *  la section correspondante ne s'affiche simplement pas, la fiche   *
  *  reste équilibrée et belle. Seuls `title` et `tagline` sont requis. *
  * ------------------------------------------------------------------ */
 
@@ -59,7 +59,7 @@ const assets = defineCollection({
 
       /* --- Contenu --- */
       intro: z.string().optional(), // paragraphe d'accroche (sinon corps markdown)
-      features: z.array(z.string()).default([]), // 5–8 puces
+      features: z.array(z.string()).default([]), // 5 a 8 puces
       includes: z.string().optional(), // ligne "Includes: ..."
       notes: z.string().optional(), // "Important notes: ..."
       idealFor: z.string().optional(), // "Ideal for: ..."
@@ -82,7 +82,7 @@ const assets = defineCollection({
           textures: z.number().optional(),
           textureRes: z.string().optional(), // "up to 2K"
           collision: z.string().optional(), // "Custom UCX" / "Auto-generated" / "None"
-          lods: z.string().optional(), // "0–3" / "None"
+          lods: z.string().optional(), // "0-3" / "None"
           nanite: z.boolean().optional(),
           rigged: z.boolean().optional(),
           animated: z.string().optional(), // méthode réelle: "Blueprint-driven doors"

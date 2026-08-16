@@ -2,7 +2,7 @@
   "name": "nythrox-asset",
   "type": "module",
   "version": "1.0.0",
-  "description": "Vitrine des assets Nythrox (Fab store) — site statique Astro, piloté par les données.",
+  "description": "Vitrine des assets Nythrox (Fab store), site statique Astro, piloté par les données.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

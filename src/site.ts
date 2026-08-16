@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------ *
- *  Réglages globaux du site — édite ICI, ça se propage partout.       *
+ *  Réglages globaux du site : édite ICI, ça se propage partout.       *
  * ------------------------------------------------------------------ */
 export const SITE = {
   name: 'Nythrox',

@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ */
-/*  Nythrox — jetons de marque (extraits du logo officiel)             */
+/*  Nythrox : jetons de marque (extraits du logo officiel)             */
 /*  navy #01061B · cream #F7F6F5 · cobalt #0451FA                      */
 /*  Tout le site lit ces variables : change une couleur ici et elle    */
 /*  se propage partout.                                                */
 /* ------------------------------------------------------------------ */
 @theme {
-  /* Surfaces — palette navy Nythrox, mise en scène marketplace */
+  /* Surfaces : palette navy Nythrox, mise en scène marketplace */
   --color-bg: #01061b;
   --color-surface: #070d26;
   --color-surface-2: #0c1436;
@@ -33,11 +33,21 @@
   --font-display: "Inter Tight Variable", "Inter Tight", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Rayons — compacts : 8px panneaux/boutons, vignettes à angles nets */
+  /* Rayons : compacts, 8px panneaux/boutons, vignettes à angles nets */
   --radius-card: 8px;
 
   /* Largeur de contenu */
   --breakpoint-3xl: 1600px;
+
+  /* ---------------------------------------------------------------- *
+   *  TEINTES DE LA BANDE D'ARGUMENTS (16/08/2026).                    *
+   *  Quatre couleurs distinctes pour que les quatre promesses se       *
+   *  distinguent d'un coup d'oeil sous le carrousel. Utilisees         *
+   *  uniquement par TrustStrip.astro.                                  *
+   * ---------------------------------------------------------------- */
+  --color-tint-teal: #2dd4bf;
+  --color-tint-amber: #f5b544;
+  --color-tint-violet: #a78bfa;
 }
 
 /* ------------------------------------------------------------------ */

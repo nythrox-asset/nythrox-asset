@@ -1,6 +1,6 @@
 ---
 # ============================================================================
-#  MODÈLE D'ASSET — copie ce fichier dans  src/content/assets/  puis renomme-le
+#  MODÈLE D'ASSET : copie ce fichier dans  src/content/assets/  puis renomme-le
 #  (ex. src/content/assets/mon-super-pack.md). Le nom du fichier = l'URL.
 #
 #  SEULS  title  ET  tagline  SONT OBLIGATOIRES.
@@ -76,7 +76,7 @@ specs:
   textures: 0
   textureRes: up to 2K
   collision: Custom UCX
-  lods: 0–3
+  lods: 0-3
   nanite: false
   animated: ""          # méthode réelle si animé (ex. "Blueprint-driven doors")
   rigged: false

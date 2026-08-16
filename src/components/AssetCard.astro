@@ -14,27 +14,37 @@ const t = useTranslations(lang);
 const l = localizedContent(d, lang);
 const href = assetHref(lang, asset.id);
 
-// Petites mentions sous le titre (seulement si vrai)
+/* Mentions posees sur la vignette (seulement si vraies).
+   `demoMapIncluded` n'est PAS affiche ici (decision Nathan 16/08/2026) : sur
+   une vignette, « Map demo » se confond avec « Demo jouable » alors que ce
+   n'est pas la meme chose. L'information reste sur la fiche produit, dans le
+   panneau d'achat, ou elle a la place d'etre comprise. */
 const flags = [
   (d.playableDemoUrl || d.demoDownloadUrl) && t('badge.playableDemo'),
   d.youtube && t('badge.video'),
-  d.demoMapIncluded && t('badge.demoMap'),
 ].filter(Boolean) as string[];
 
 const price = d.pricePersonal;
 ---
 
-<a href={href} class="group block">
-  <!-- Vignette : l'image domine, texte en dessous sur le fond de page -->
-  <div class="relative aspect-video overflow-hidden rounded-lg bg-surface-2">
+{/* Carte en panneau : la capture est encadree par un liseré epais de la meme
+    couleur que le bloc, et tout le texte du produit vit DANS la carte au lieu
+    de flotter sous la vignette. */}
+<a
+  href={href}
+  data-reveal
+  class="asset-card group relative flex flex-col overflow-hidden rounded-xl border-[6px] border-surface bg-surface"
+>
+  <div class="relative aspect-video overflow-hidden bg-surface-2">
     {
       d.cover ? (
         <Image
           src={d.cover}
           alt={l.title}
-          widths={[400, 640, 800]}
-          sizes="(max-width: 640px) 100vw, 380px"
-          class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          widths={[480, 768, 1024, 1400]}
+          sizes="(max-width: 640px) 100vw, 560px"
+          quality={88}
+          class="h-full w-full object-cover"
         />
       ) : (
         <div class="flex h-full w-full items-center justify-center">
@@ -42,26 +52,72 @@ const price = d.pricePersonal;
         </div>
       )
     }
+
+    {
+      flags.length > 0 && (
+        <div class="absolute left-3 top-3 flex flex-wrap gap-1.5">
+          {flags.map((f) => (
+            <span class="rounded-full bg-bg/70 px-2.5 py-1 text-[11px] font-medium text-text backdrop-blur-sm">
+              {f}
+            </span>
+          ))}
+        </div>
+      )
+    }
   </div>
 
-  <div class="mt-2.5">
-    <h3 class="font-display text-sm font-semibold leading-snug text-text transition-colors group-hover:text-accent-bright">
-      {l.title}
-    </h3>
-    <p class="mt-0.5 line-clamp-1 text-xs text-text-muted">{l.tagline}</p>
-    <div class="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-text-faint">
-      {d.category && <span>{d.category}</span>}
+  <div class="flex flex-1 flex-col gap-2 p-5 sm:p-6">
+    {
+      d.category && (
+        <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-text">{d.category}</span>
+      )
+    }
+    <h3 class="font-display text-base font-bold leading-snug text-text sm:text-lg">{l.title}</h3>
+    <p class="line-clamp-2 text-sm leading-relaxed text-text-muted">{l.tagline}</p>
+
+    <div class="mt-auto flex items-center justify-between gap-3 border-t border-border pt-4">
       {
-        flags.map((f) => (
-          <>
-            <span aria-hidden="true" class="text-text-faint/50">·</span>
-            <span>{f}</span>
-          </>
-        ))
+        price ? (
+          <span class="tabular text-sm font-semibold text-text">{price}</span>
+        ) : (
+          <span class="text-sm text-text-faint">{t('card.viewOnFab')}</span>
+        )
       }
-    </div>
-    <div class="tabular mt-1 text-xs text-text">
-      {price ? price : <span class="text-text-faint">{t('card.viewOnFab')}</span>}
+      <span class="inline-flex items-center gap-1.5 text-sm font-medium text-text">
+        {t('card.details')}
+        <svg
+          viewBox="0 0 24 24"
+          class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          aria-hidden="true"
+        >
+          <path d="M5 12h13m0 0-5-5m5 5-5 5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
     </div>
   </div>
 </a>
+
+<style>
+  /* Survol : c'est le BLOC ENTIER qui grossit et se souleve, pas la photo a
+     l'interieur. Aucune couleur ne bouge, ni le contour, ni le texte. */
+  .asset-card {
+    transition:
+      transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 260ms ease;
+  }
+  .asset-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 22px 46px -22px rgba(0, 0, 0, 0.75);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .asset-card {
+      transition: none;
+    }
+    .asset-card:hover {
+      transform: none;
+    }
+  }
+</style>

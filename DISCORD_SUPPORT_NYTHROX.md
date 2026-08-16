@@ -1,4 +1,4 @@
-# Serveur Discord de support Nythrox — plan de montage
+# Serveur Discord de support Nythrox, plan de montage
 
 Je ne peux pas créer le serveur à ta place, ça demande d'agir sur ton compte.
 Voici le serveur prêt à monter. Compte 15 à 20 minutes.
@@ -174,7 +174,7 @@ message « bientôt disponible ». Rien d'autre à faire.
 
 ---
 
-## 8. Tickets privés — Ticket Tool
+## 8. Tickets privés avec Ticket Tool
 
 Décision Nathan du 27/07/2026 : **Ticket Tool pour l'instant**, le bot maison
 reste en réserve (voir la section 9).

@@ -141,22 +141,33 @@ const countLabel =
           )}
         </div>
 
-        <p class="mt-4 max-w-2xl text-[13px] leading-relaxed text-text-muted">{t('hero.subtitle')}</p>
+        {/* La promesse du site merite un vrai niveau de titre, pas une ligne
+            de gris de 13 px que l'oeil saute. */}
+        <p class="mt-7 max-w-3xl font-display text-lg leading-relaxed text-text sm:text-xl">
+          {t('hero.subtitle')}
+        </p>
         <TrustStrip />
       </section>
     )
   }
 
   <!-- TOUS LES ASSETS -->
-  <section id="assets" class="mx-auto max-w-6xl scroll-mt-20 px-5 pt-12 sm:px-8">
-    <div class="mb-5 flex items-baseline justify-between">
-      <h2 class="text-2xl font-bold text-text">{t('assets.heading')}</h2>
-      <span class="text-xs text-text-faint">{countLabel}</span>
+  <section id="assets" class="mx-auto max-w-6xl scroll-mt-20 px-5 pt-16 sm:px-8">
+    <div class="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+      <div>
+        <span class="block h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+        <h2 class="mt-3 font-display text-3xl font-bold text-text sm:text-4xl">{t('assets.heading')}</h2>
+      </div>
+      <span class="text-sm text-text-faint">{countLabel}</span>
     </div>
 
     {
       all.length > 0 ? (
-        <div class="grid grid-cols-2 gap-5 lg:grid-cols-3">
+        /* Deux par ligne a partir de `sm` : les blocs restent larges et la
+           capture se lit vraiment. NB : un commentaire pose ici doit etre un
+           commentaire JS nu comme celui-ci, jamais un commentaire accolade,
+           car la parenthese du ternaire n'accepte qu'une seule expression. */
+        <div class="grid gap-6 sm:grid-cols-2">
           {all.map((a) => (
             <AssetCard asset={a} />
           ))}
@@ -214,4 +225,31 @@ const countLabel =
     root.addEventListener('mouseleave', start);
     start();
   });
+
+  /* Apparition des cartes au defilement. Volontairement pilote en JS : si le
+     script ne tourne pas (ou si l'utilisateur refuse les animations), rien
+     n'est masque et la page reste complete. */
+  (() => {
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-reveal]')];
+    if (!cards.length) return;
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    cards.forEach((el) => { el.style.opacity = '0'; });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          el.style.animationDelay = `${Math.min(cards.indexOf(el), 5) * 70}ms`;
+          el.style.opacity = '';
+          el.classList.add('rise');
+          io.unobserve(el);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    cards.forEach((el) => io.observe(el));
+  })();
 </script>

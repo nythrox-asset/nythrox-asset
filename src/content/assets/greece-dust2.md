@@ -45,11 +45,11 @@ gallery:
 demoMapIncluded: false
 overviewMapIncluded: false
 
-# Demo Windows construite (2,506 Gio) mais PAS ENCORE HEBERGEE : au-dessus du
-# plafond de 2 Gio par fichier des releases GitHub. Reactiver ces deux champs
-# des que le fichier est heberge (split, autre hote, ou demo allegee).
-# demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/GreeceDust2_Demo_Windows.zip
-# demoDownloadNote: Windows · 2.69 GB
+# Demo Windows en DEUX fichiers : le .ucas seul depasse le plafond de 2 Gio par
+# fichier des releases GitHub, donc part1 (donnees) + part2 (executable et
+# moteur). Le lien pointe la page de release qui liste les deux.
+demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/tag/demos-v1
+demoDownloadNote: Windows · 2 files to download · 2.07 GB
 
 features:
   - "Fully built map, open the project and play, nothing to import"
@@ -61,6 +61,7 @@ features:
   - "Animated sea with real Gerstner waves and real-time reflections"
   - "Dynamic Lumen lighting with ray tracing and Virtual Shadow Maps, nothing baked"
   - "Lightmap UVs verified on every mesh, none missing"
+  - "Playable Windows demo, walk the whole map before buying"
 
 includes: "Complete Unreal Engine 5.8 project (Complete project), plus the Blender source file (.blend)."
 notes: "This pack contains environment geometry only, no weapons, no game logic and no bomb/defuse scripts, the bomb sites are set dressing and signage. Doors are static geometry; interactive door functionality requires the separate Nythrox Interactive Door plugin. The windmills are static and do not turn. The animated water uses a Gerstner wave shader derived from the MIT-licensed Fishies project, with its notice included. No Overview map in this release."
@@ -91,6 +92,7 @@ i18n:
       - "Mer animée avec de vraies vagues de Gerstner et des reflets en temps réel"
       - "Éclairage dynamique Lumen avec ray tracing et Virtual Shadow Maps, rien de précalculé"
       - "UV de lightmap vérifiés sur tous les modèles, aucun manquant"
+      - "Démo Windows jouable, parcourez toute la map avant d'acheter"
     includes: "Projet Unreal Engine 5.8 complet (Complete project), plus le fichier source Blender (.blend)."
     notes: "Ce pack contient uniquement la géométrie d'environnement, aucune arme, aucune logique de jeu et aucun script de pose/désamorçage : les sites de bombe sont du décor et de la signalétique. Les portes sont de la géométrie statique ; la fonctionnalité de porte interactive nécessite le plugin Nythrox Interactive Door, vendu séparément. Les moulins sont statiques et ne tournent pas. L'eau animée utilise un shader à vagues de Gerstner dérivé du projet Fishies sous licence MIT, notice incluse. Pas de carte Overview dans cette version."
     idealFor: "Modes multijoueur par objectifs, prototypes de search and destroy, ou comme environnement de ville côtière grecque pour n'importe quel projet."

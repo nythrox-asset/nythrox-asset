@@ -37,9 +37,10 @@ export const SITE = {
      * donne en une ligne. Vide = la page n'affiche rien plutot qu'un contact
      * mort.
      */
-    discordHandle: 'nythrox_asset',
+    // 26/09/2026 (Nathan) : support par e-mail a la place du Discord.
+    discordHandle: '',
     /** Adresse de repli pour ceux qui n'utilisent pas Discord. */
-    email: '',
+    email: 'lnythroxl@gmail.com',
     /** Delai de reponse annonce. Ne promets que ce que tu tiens. */
     responseTime: '48h',
   },

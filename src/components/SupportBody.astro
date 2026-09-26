@@ -22,14 +22,14 @@ const copy = {
     kicker: 'Support',
     title: 'Get help with your pack',
     lead:
-      'Every Nythrox product is supported by a real person. Message me on Discord, describe what you are seeing, and you get an answer.',
+      'Every Nythrox product is supported by a real person. Email me, describe what you are seeing, and you get an answer.',
     discordTitle: 'Discord, the fastest route',
     discordBody:
       'Add me and write directly: bug reports, integration questions, feature requests. No ticket queue, no bot, you get me.',
     discordCta: 'My Discord',
     discordSoon: 'Discord contact coming shortly.',
-    emailTitle: 'Prefer email?',
-    emailBody: 'For invoicing, licensing or anything you would rather not post publicly.',
+    emailTitle: 'Email support',
+    emailBody: 'Questions, bug reports, invoicing or licensing: one address for everything.',
     responseTitle: 'Response time',
     responseBody: `Typical first answer within ${SITE.support.responseTime}. Weekends included, but slower.`,
     beforeTitle: 'Before you post, this saves us both time',
@@ -55,14 +55,14 @@ const copy = {
     kicker: 'Support',
     title: 'De l’aide sur ton pack',
     lead:
-      'Chaque produit Nythrox est suivi par une vraie personne. Écris-moi sur Discord, décris ce que tu vois, tu auras une réponse.',
+      'Chaque produit Nythrox est suivi par une vraie personne. Écris-moi par e-mail, décris ce que tu vois, tu auras une réponse.',
     discordTitle: 'Discord, le chemin le plus rapide',
     discordBody:
       'Ajoute-moi et écris directement : bugs, questions d’intégration, demandes de fonctionnalités. Pas de file de tickets, pas de bot, tu m’as moi.',
     discordCta: 'Mon Discord',
     discordSoon: 'Contact Discord bientôt disponible.',
-    emailTitle: 'Tu préfères l’e-mail ?',
-    emailBody: 'Pour la facturation, la licence, ou tout ce que tu ne veux pas écrire en public.',
+    emailTitle: 'Support par e-mail',
+    emailBody: 'Questions, bugs, facturation ou licence : une seule adresse pour tout.',
     responseTitle: 'Délai de réponse',
     responseBody: `Première réponse généralement sous ${SITE.support.responseTime}. Week-ends compris, mais plus lentement.`,
     beforeTitle: 'À joindre dès le premier message, ça fait gagner un aller-retour',
@@ -88,14 +88,14 @@ const copy = {
     kicker: 'Soporte',
     title: 'Ayuda con tu pack',
     lead:
-      'Cada producto Nythrox tiene detrás a una persona real. Escríbeme por Discord, describe lo que ves y tendrás respuesta.',
+      'Cada producto Nythrox tiene detrás a una persona real. Escríbeme por correo, describe lo que ves y tendrás respuesta.',
     discordTitle: 'Discord, la vía más rápida',
     discordBody:
       'Añádeme y escribe directamente: errores, preguntas de integración, peticiones de funciones. Sin cola de tickets, sin bot, hablas conmigo.',
     discordCta: 'Mi Discord',
     discordSoon: 'Contacto de Discord disponible en breve.',
-    emailTitle: '¿Prefieres el correo?',
-    emailBody: 'Para facturación, licencias o cualquier cosa que no quieras publicar.',
+    emailTitle: 'Soporte por correo',
+    emailBody: 'Preguntas, errores, facturación o licencias: una sola dirección para todo.',
     responseTitle: 'Tiempo de respuesta',
     responseBody: `Primera respuesta normalmente en ${SITE.support.responseTime}. Fines de semana incluidos, pero más lentos.`,
     beforeTitle: 'Antes de escribir, esto ahorra una ida y vuelta',
@@ -132,8 +132,8 @@ const c = copy[lang] ?? copy.en;
   </h1>
   <p class="mt-5 text-lg leading-relaxed text-text-muted">{c.lead}</p>
 
-  <!-- Discord -->
-  <div class="mt-12 rounded-2xl border border-border/70 bg-surface/60 p-6 sm:p-8">
+  <!-- Discord (masque sans identifiant) -->
+  {hasDiscord && (<div class="mt-12 rounded-2xl border border-border/70 bg-surface/60 p-6 sm:p-8">
     <h2 class="font-display text-xl font-bold text-text">{c.discordTitle}</h2>
     <p class="mt-2.5 leading-relaxed text-text-muted">{c.discordBody}</p>
     {
@@ -157,7 +157,7 @@ const c = copy[lang] ?? copy.en;
         </p>
       )
     }
-  </div>
+  </div>)}
 
   <!-- E-mail + delai -->
   <div class="mt-6 grid gap-6 sm:grid-cols-2">

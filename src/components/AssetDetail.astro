@@ -160,8 +160,32 @@ const smalls = useSwapGallery
         {
           l.features.length > 0 && (
             <section class="mt-10">
-              <h2 class="mb-4 text-lg font-bold text-text">{t('detail.whatsIncluded')}</h2>
+              <h2 class="mb-4 text-lg font-bold text-text">
+                {l.featuresTitle ?? (l.included.length > 0 ? t('detail.whatsInMap') : t('detail.whatsIncluded'))}
+              </h2>
               <FeatureList features={l.features} />
+            </section>
+          )
+        }
+
+        {
+          l.included.length > 0 && (
+            <section class="mt-10">
+              <h2 class="mb-4 text-lg font-bold text-text">{t('detail.whatsIncluded')}</h2>
+              <FeatureList features={l.included} />
+            </section>
+          )
+        }
+
+        {
+          l.noteList.length > 0 && (
+            <section class="mt-10 rounded-lg border border-warning/30 bg-warning/5 p-4">
+              <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-warning">{t('detail.notes')}</h3>
+              <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-text-muted">
+                {l.noteList.map((n) => (
+                  <li>{n}</li>
+                ))}
+              </ul>
             </section>
           )
         }

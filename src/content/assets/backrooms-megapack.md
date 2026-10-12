@@ -1,7 +1,10 @@
 ---
-title: "Backrooms Megapack: Level 0, Hub and Level 1"
-tagline: "Three connected Backrooms areas in one project: mono-yellow offices, a concrete road tunnel Hub, and brick service corridors."
-intro: "Three connected Backrooms areas in a single project: the mono-yellow wallpapered offices of Level 0, a concrete road tunnel Hub lined with red warning panels and slow extractor fans, and the brick and pipework service corridors of Level 1. Buzzing fluorescent light, repeating rooms and long dead ends, built for atmosphere first, an unsettling familiarity rather than jump scares."
+title: "Backrooms Megapack : Level 0, Hub and Level 1"
+tagline: "Three connected Backrooms areas in one level: mono-yellow offices, a concrete road tunnel Hub, and brick service corridors."
+intro: "Backrooms Megapack brings three connected Backrooms areas together in one level: the mono-yellow wallpapered offices of Level 0, a concrete road tunnel Hub lined with red warning panels and slow extractor fans, and the brick and pipework service corridors of Level 1. Buzzing fluorescent light, repeating rooms and long dead ends are built for atmosphere, an unsettling familiarity rather than jump scares. Delivered as a complete Unreal Engine 5.8 project, ready to play."
+
+# Publie sur Fab le 29/07/2026, mis a jour le 28/09/2026. Description reprise
+# mot pour mot de la fiche Fab le 12/10/2026.
 featured: true
 order: 400
 date: 2026-07-27
@@ -12,53 +15,55 @@ tags: [backrooms, level 0, hub, level 1, liminal, analog horror, megapack, offic
 # Media : la cover est la planche a trois panneaux avec le titre. Le site ne
 # l'utilise JAMAIS en banniere (cover a texte), il prend la 1re de gallery :
 # le tunnel du Hub, l'image la plus forte du pack.
-cover: ./media/backrooms-megapack-cover.jpg
+# Images : celles de la fiche Fab, dans le meme ordre (relevees le 12/10/2026).
+cover: ./media/backrooms-megapack-fab-01.jpg
 gallery:
-  - ./media/backrooms-megapack-hub-tunnel.jpg
-  - ./media/backrooms-megapack-level0-hall.jpg
-  - ./media/backrooms-megapack-level0-wide.jpg
-  - ./media/backrooms-megapack-level0-corner.jpg
-  - ./media/backrooms-megapack-level0-low.jpg
-  - ./media/backrooms-megapack-level0-elevator.jpg
-  - ./media/backrooms-megapack-hub-signs.jpg
-  - ./media/backrooms-megapack-hub-door.jpg
-  - ./media/backrooms-megapack-hub-lift.jpg
-  - ./media/backrooms-megapack-hub-curve.jpg
-  - ./media/backrooms-megapack-level1-corridor.jpg
-  - ./media/backrooms-megapack-level1-crates.jpg
-  - ./media/backrooms-megapack-level1-pipes.jpg
-  - ./media/backrooms-megapack-level1-storage.jpg
-  - ./media/backrooms-megapack-level1-pallets.jpg
+  - ./media/backrooms-megapack-fab-01.jpg
+  - ./media/backrooms-megapack-fab-02.jpg
+  - ./media/backrooms-megapack-fab-03.jpg
+  - ./media/backrooms-megapack-fab-04.jpg
+  - ./media/backrooms-megapack-fab-05.jpg
+  - ./media/backrooms-megapack-fab-06.jpg
+  - ./media/backrooms-megapack-fab-07.jpg
+  - ./media/backrooms-megapack-fab-08.jpg
+  - ./media/backrooms-megapack-fab-09.jpg
+  - ./media/backrooms-megapack-fab-10.jpg
+  - ./media/backrooms-megapack-fab-11.jpg
+  - ./media/backrooms-megapack-fab-12.jpg
+  - ./media/backrooms-megapack-fab-13.jpg
+  - ./media/backrooms-megapack-fab-14.jpg
 
-# Contenu livre
-demoMapIncluded: true
+# Contenu livre : un seul niveau qui relie les trois zones, pas d'Overview.
+demoMapIncluded: false
 overviewMapIncluded: false
 
-# Commercial : renseigner fabUrl avec l'URL PUBLIQUE (www.fab.com/listings/<id>),
-# pas celle du portail vendeur (www.fab.com/portal/listings/<id>).
-# 2026-07-29 : l'ancienne valeur commentee (0a6661c0-...) est remplacee par
-# l'URL publique donnee par Nathan.
+# Commercial : URL PUBLIQUE de la fiche (www.fab.com/listings/<id>).
 fabUrl: https://www.fab.com/listings/fed7a0f3-110e-4853-8e6a-a5d4ee8abc22
 
-# Demo jouable servie par la release GitHub demos-v1 : les builds sont trop
-# lourds pour Netlify, qui recommande de rester sous 10 Mo par fichier.
-demoDownloadUrl: https://github.com/nythrox-asset/nythrox-asset/releases/download/demos-v1/Backrooms_Megapack_Demo_Windows.zip
-demoDownloadNote: Windows · 434 MB
-
 features:
-  - "Three connected areas with distinct palettes: mustard wallpaper and dark baseboards, poured concrete and asphalt, exposed brick and pale pipework"
-  - "860 different 3D models and 150,031 triangles, 1 master material and 143 material instances"
+  - "Fully built level, open the project and play, nothing to import"
+  - "Three connected areas: Level 0 offices, the tunnel Hub and Level 1 corridors"
+  - "Three palettes: mustard wallpaper, concrete and asphalt, brick and pipework"
+  - "860 different 3D models and 150,031 triangles"
+  - "1 master material and 143 material instances"
   - "327 movable lights, all casting shadows, with Lumen and ray tracing"
   - "14 looping fan animations driven by level sequences"
   - "Custom collision: hidden blocking meshes and simple collision on every mesh"
   - "Nanite enabled on all 860 meshes, no LODs to manage"
-  - "Organized content under a single /Game/ root with renamed material instances"
-  - "Demo map included"
-  - "Complete Unreal Engine project: open and play immediately, no import steps required"
 
-includes: "Unreal Engine 5.8 project (Complete project), Blender source file (.blend), and GLB."
-notes: "This package contains environment geometry only, no characters, creatures, or scripted events are included. Doors are static geometry only; interactive door functionality requires the separate Nythrox Interactive Door plugin. The three areas share one level, not three separate maps. Requires Unreal Engine 5.8 and a DirectX 12 GPU with Shader Model 6."
-idealFor: "Liminal space and analog horror games, backrooms style exploration, walking sims, found footage or short film sets, or as a modular base for your own underground level."
+included:
+  - "The connected level, fully playable"
+  - "A playable third-person character, already set up"
+  - "Collision already configured, nothing to set up"
+  - "Level 0 offices: yellow wallpaper, dark baseboards and fluorescent lights"
+  - "The tunnel Hub: concrete, asphalt, red warning panels and extractor fans"
+  - "Level 1 corridors: exposed brick and pale pipework"
+  - "Blender source file (.blend) and GLB"
+  - "The complete Unreal Engine 5.8 project"
+
+noteList:
+  - "Environment only, no custom characters, creatures or gameplay logic. Doors are static; interactive doors need the separate Nythrox Interactive Door plugin."
+  - "Requires Unreal Engine 5.8 and a DirectX 12 GPU with Shader Model 6. The three areas share one level, not three separate maps."
 
 specs:
   formats: [Unreal project, GLB, Blender]
@@ -75,36 +80,54 @@ specs:
 i18n:
   fr:
     title: "Backrooms Megapack : Level 0, Hub et Level 1"
-    tagline: "Trois zones Backrooms reliées dans un seul projet : bureaux jaune monochrome, Hub en tunnel routier béton, couloirs techniques en brique."
-    intro: "Trois zones Backrooms reliées dans un seul projet : les bureaux tapissés de jaune monochrome du Level 0, un Hub en tunnel routier de béton bordé de panneaux d'avertissement rouges et de ventilateurs d'extraction lents, et les couloirs techniques en brique et tuyauterie du Level 1. Néons bourdonnants, pièces qui se répètent et longues impasses, pensés avant tout pour l'atmosphère, une familiarité troublante plutôt que des jump scares."
+    tagline: "Trois zones des Backrooms reliées dans un seul niveau : bureaux jaunes, Hub en tunnel routier de béton et couloirs de service en brique."
+    intro: "Backrooms Megapack réunit trois zones des Backrooms reliées dans un seul niveau : les bureaux au papier peint jaune uni du Level 0, un Hub en tunnel routier de béton bordé de panneaux d'avertissement rouges et de lents ventilateurs d'extraction, et les couloirs de service en brique et tuyauterie du Level 1. La lumière fluorescente qui grésille, les pièces qui se répètent et les longues impasses sont pensées pour l'ambiance, une familiarité dérangeante plutôt que des sursauts. Livré en projet Unreal Engine 5.8 complet, prêt à jouer."
     features:
-      - "Trois zones reliées aux palettes distinctes : papier peint moutarde et plinthes sombres, béton coulé et asphalte, brique apparente et tuyauterie claire"
-      - "860 modèles 3D différents et 150 031 triangles, 1 matériau maître et 143 instances de matériau"
+      - "Niveau entièrement monté, vous ouvrez le projet et vous jouez, aucun import à faire"
+      - "Trois zones reliées : les bureaux du Level 0, le Hub en tunnel et les couloirs du Level 1"
+      - "Trois palettes : papier peint moutarde, béton et asphalte, brique et tuyauterie"
+      - "860 modèles 3D différents et 150 031 triangles"
+      - "1 matériau maître et 143 instances de matériau"
       - "327 lumières mobiles, qui projettent toutes des ombres, avec Lumen et ray tracing"
       - "14 animations de ventilateurs en boucle, pilotées par des séquences de niveau"
       - "Collision sur mesure : maillages bloquants cachés et collision simple sur chaque mesh"
       - "Nanite activé sur les 860 meshes, aucun LOD à gérer"
-      - "Contenu organisé sous une racine /Game/ unique, avec instances de matériaux renommées"
-      - "Map de démo incluse"
-      - "Projet Unreal Engine complet : à ouvrir et jouer immédiatement, sans étape d'import"
-    includes: "Projet Unreal Engine 5.8 (Complete project), fichier source Blender (.blend) et GLB."
-    notes: "Ce pack contient uniquement la géométrie d'environnement, aucun personnage, créature ou événement scripté n'est inclus. Les portes sont de la géométrie statique ; la fonctionnalité de porte interactive nécessite le plugin Nythrox Interactive Door, vendu séparément. Les trois zones partagent un seul niveau, pas trois cartes séparées. Demande Unreal Engine 5.8 et une carte graphique DirectX 12 avec Shader Model 6."
-    idealFor: "Jeux d'espaces liminaux et d'analog horror, exploration de type backrooms, walking sims, décors de found footage ou de court métrage, ou base modulaire pour votre propre niveau souterrain."
+    included:
+      - "Le niveau relié, entièrement jouable"
+      - "Un personnage jouable à la troisième personne, déjà réglé"
+      - "Collision déjà configurée, rien à régler"
+      - "Bureaux du Level 0 : papier peint jaune, plinthes sombres et néons"
+      - "Le Hub en tunnel : béton, asphalte, panneaux d'avertissement rouges et ventilateurs d'extraction"
+      - "Couloirs du Level 1 : brique apparente et tuyauterie claire"
+      - "Fichier source Blender (.blend) et GLB"
+      - "Le projet Unreal Engine 5.8 complet"
+    noteList:
+      - "Environnement seul, aucun personnage, créature ou logique de jeu sur mesure. Les portes sont statiques ; les portes interactives demandent le plugin Nythrox Interactive Door, vendu séparément."
+      - "Demande Unreal Engine 5.8 et une carte graphique DirectX 12 avec Shader Model 6. Les trois zones partagent un seul niveau, pas trois cartes séparées."
   es:
     title: "Backrooms Megapack: Level 0, Hub y Level 1"
-    tagline: "Tres zonas Backrooms conectadas en un solo proyecto: oficinas amarillas, un Hub de túnel de hormigón y pasillos técnicos de ladrillo."
-    intro: "Tres zonas Backrooms conectadas en un solo proyecto: las oficinas empapeladas de amarillo monocromo del Level 0, un Hub de túnel de carretera de hormigón flanqueado por paneles de advertencia rojos y ventiladores extractores lentos, y los pasillos técnicos de ladrillo y tuberías del Level 1. Fluorescentes que zumban, salas que se repiten y largos callejones sin salida, pensados ante todo para la atmósfera, una familiaridad inquietante más que sustos repentinos."
+    tagline: "Tres zonas de los Backrooms conectadas en un solo nivel: oficinas amarillas, un Hub en túnel de hormigón y pasillos de servicio de ladrillo."
+    intro: "Backrooms Megapack reúne tres zonas de los Backrooms conectadas en un solo nivel: las oficinas de papel pintado amarillo liso del Level 0, un Hub en túnel de carretera de hormigón flanqueado por paneles rojos de advertencia y lentos ventiladores de extracción, y los pasillos de servicio de ladrillo y tuberías del Level 1. La luz fluorescente que zumba, las salas que se repiten y los largos callejones sin salida están pensados para la atmósfera, una familiaridad inquietante más que sustos repentinos. Entregado como proyecto completo de Unreal Engine 5.8, listo para jugar."
     features:
-      - "Tres zonas conectadas con paletas distintas: papel pintado mostaza y zócalos oscuros, hormigón y asfalto, ladrillo visto y tuberías claras"
-      - "860 modelos 3D diferentes y 150.031 triángulos, 1 material maestro y 143 instancias de material"
+      - "Nivel totalmente montado, abre el proyecto y juega, sin nada que importar"
+      - "Tres zonas conectadas: las oficinas del Level 0, el Hub en túnel y los pasillos del Level 1"
+      - "Tres paletas: papel pintado mostaza, hormigón y asfalto, ladrillo y tuberías"
+      - "860 modelos 3D diferentes y 150.031 triángulos"
+      - "1 material maestro y 143 instancias de material"
       - "327 luces móviles, todas proyectan sombras, con Lumen y ray tracing"
       - "14 animaciones de ventilador en bucle, controladas por secuencias de nivel"
       - "Colisión a medida: mallas de bloqueo ocultas y colisión simple en cada malla"
       - "Nanite activado en las 860 mallas, sin LOD que gestionar"
-      - "Contenido organizado bajo una única raíz /Game/ con instancias de material renombradas"
-      - "Mapa de demo incluido"
-      - "Proyecto Unreal Engine completo: ábrelo y juega de inmediato, sin pasos de importación"
-    includes: "Proyecto Unreal Engine 5.8 (Complete project), archivo fuente Blender (.blend) y GLB."
-    notes: "Este pack contiene únicamente la geometría del entorno, no incluye personajes, criaturas ni eventos con scripts. Las puertas son geometría estática; la funcionalidad de puerta interactiva requiere el plugin Nythrox Interactive Door, vendido por separado. Las tres zonas comparten un solo nivel, no tres mapas separados. Requiere Unreal Engine 5.8 y una GPU DirectX 12 con Shader Model 6."
-    idealFor: "Juegos de espacios liminales y analog horror, exploración estilo backrooms, walking sims, decorados de found footage o cortometraje, o como base modular para tu propio nivel subterráneo."
+    included:
+      - "El nivel conectado, totalmente jugable"
+      - "Un personaje jugable en tercera persona, ya configurado"
+      - "Colisión ya configurada, nada que ajustar"
+      - "Oficinas del Level 0: papel pintado amarillo, rodapiés oscuros y fluorescentes"
+      - "El Hub en túnel: hormigón, asfalto, paneles rojos de advertencia y ventiladores de extracción"
+      - "Pasillos del Level 1: ladrillo visto y tuberías claras"
+      - "Archivo fuente de Blender (.blend) y GLB"
+      - "El proyecto completo de Unreal Engine 5.8"
+    noteList:
+      - "Solo entorno, sin personajes, criaturas ni lógica de juego propios. Las puertas son estáticas; las puertas interactivas requieren el plugin Nythrox Interactive Door, vendido por separado."
+      - "Requiere Unreal Engine 5.8 y una GPU DirectX 12 con Shader Model 6. Las tres zonas comparten un solo nivel, no tres mapas separados."
 ---

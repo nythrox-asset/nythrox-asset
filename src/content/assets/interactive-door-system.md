@@ -1,10 +1,10 @@
 ---
 title: Nythrox Interactive Door System
-tagline: "Turn any imported mesh into a working interactive door in under a minute, even when its pivot is broken."
-intro: "Nythrox Interactive Door System builds a virtual hinge from the door's real geometry, so meshes coming from CAD, scans, kitbashes or game exports open cleanly without a round-trip through Blender. Guided editor panel, in-editor preview before Play mode, locking, sounds, Blueprint events and replicated door state. A focused tool for doors, not a generic interaction framework."
-# Publie sur Fab le 30/09/2026 : la fiche, masquee depuis le 27/07/2026 en
-# attendant, est de nouveau visible (12/10/2026). Textes realignes sur la
-# fiche Fab.
+tagline: "Works with any door: turn any imported door mesh into a working interactive door in a few clicks, even when its pivot is in the wrong place."
+intro: "Works with any door. Nythrox Interactive Door System turns any imported door mesh into a working interactive door in a few clicks, even when its pivot is in the wrong place. It builds a virtual hinge from the door's real geometry, so the leaf swings on its real edge and stays against its frame, with no trip back to your 3D software."
+
+# Publie sur Fab le 30/09/2026. Description reprise mot pour mot de la fiche
+# Fab le 12/10/2026 (What it does, What's included, Technical details, Notes).
 draft: false
 featured: false
 order: 300
@@ -13,68 +13,95 @@ category: Plugin
 engine: Unreal Engine 5.8
 tags: [plugin, door, interactive, hinge, pivot, unreal engine, ue5, blueprint, tool, editor tool, multiplayer, c++]
 
-# Media : aucune capture pour l'instant, le site affiche le visuel de marque.
-# Ajoute une cover et une galerie ici quand les captures sont pretes.
-# cover: ./media/door-system-cover.jpg
-# gallery:
-#   - ./media/door-system-panel.jpg
+# Images : celles de la fiche Fab, dans le meme ordre (relevees le 12/10/2026).
+cover: ./media/interactive-door-system-fab-01.jpg
+gallery:
+  - ./media/interactive-door-system-fab-01.jpg
+  - ./media/interactive-door-system-fab-02.jpg
+  - ./media/interactive-door-system-fab-03.jpg
+  - ./media/interactive-door-system-fab-04.jpg
+  - ./media/interactive-door-system-fab-05.jpg
+  - ./media/interactive-door-system-fab-06.jpg
 
-# Commercial : fiche Fab publiee le 30/09/2026.
 fabUrl: https://www.fab.com/listings/f6179ac0-8dfc-4ca2-9bdc-395ee75713f4
 
+featuresTitle: "What it does"
 features:
-  - "Guided editor panel: select the meshes, record closed, record open, save"
-  - Detect frame measures the real jamb of the opening and calibrates the hinge inset in one click
-  - Preview the full animation in the editor, without entering Play mode
-  - Virtual hinge on the detected slab edge, refined by hinge inset and a leaf-face pivot for thick slabs
-  - "Demonstrated mode: the door rotates around the exact centre of the pose you recorded, ideal for unusual frames"
-  - Sliding doors supported by the same workflow, no hinge settings needed
-  - Locking, auto-close delay, open/close/locked sounds, motion easing
-  - "Blueprint events: On Door Opened, On Door Closed, On Interaction Denied"
-  - Linked doors for double leaves and airlocks
-  - "Focused door: one key press opens only the door the player looks at"
-  - "Panel, dialogs and in-game prompt in 4 languages: English, French, German and Spanish"
-  - "Multiplayer ready: server-authoritative, clients open doors with no setup"
+  - "Guided panel: create the door, rotate it open, record, done."
+  - "Virtual hinge on the real leaf edge and face, handles and knobs ignored."
+  - "Detect frame calibrates the hinge on the jamb of the opening."
+  - "Editor preview plays the motion without entering Play mode."
+  - "Swing and sliding doors, linked double doors and interlocked airlocks."
+  - "Focused door: one key press opens only the door the player looks at."
+  - "Multiplayer ready: server-authoritative, clients open doors with no setup."
+  - "Gameplay options: lock, auto-close, sounds, easing and Blueprint events."
 
-includes: "Unreal Engine 5.8 plugin for Windows 64-bit: full C++ source (Runtime and Editor modules), a demo level with five door setups and seven door Blueprints, an illustrated PDF manual and README in English, and 11 automated tests including two-player network tests."
-notes: "Unreal Engine 5.8, Windows 64-bit only. Doors only: a focused tool, not a generic interaction framework. Environments shown in the gallery are not included."
-idealFor: "Any project importing door meshes from CAD, photogrammetry, kitbashes or other engines, archviz walkthroughs, horror and exploration games, and level designers who need doors working now rather than after a Blender round-trip."
+included:
+  - "Full C++ source, Runtime and Editor modules"
+  - "Demo level with five door setups and seven door Blueprints"
+  - "Illustrated PDF manual and README, in English"
+  - "Panel, dialogs and in-game prompt in 4 languages: English, French, German, Spanish"
+  - "11 automated tests, including two-player network tests"
+
+noteList:
+  - "Unreal Engine 5.8, Windows 64-bit only."
+  - "Doors only: a focused tool, not a generic interaction framework. Environments shown in the gallery are not included."
 
 specs:
   formats: [Unreal plugin]
-  engineVersion: "5.8 (tested)"
-  platforms: Win64
+  engineVersion: "5.8"
+  platforms: "Windows (development), Win64 (target builds)"
   source: Complete C++ included
   modules: "NythroxDoorSystem (Runtime), NythroxDoorSystemEditor (Editor)"
-  network: Server-authoritative, clients open doors with no setup
+  network: "Replicated, server-authoritative"
   documentation: Illustrated PDF manual and README in English
   automationTests: true
 
 i18n:
   fr:
     title: Nythrox Interactive Door System
-    tagline: "Transforme n'importe quel mesh importé en porte interactive fonctionnelle en moins d'une minute, même quand son pivot est cassé."
-    intro: "Nythrox Interactive Door System construit une charnière virtuelle à partir de la géométrie réelle de la porte. Les meshes venant de CAO, de scans, de kitbash ou d'exports de jeu s'ouvrent proprement, sans détour par Blender. Panneau guidé dans l'éditeur, aperçu avant le mode Jeu, verrouillage, sons, événements Blueprint et état de porte répliqué. Un outil ciblé sur les portes, pas un cadre d'interaction générique."
+    tagline: "Marche avec n'importe quelle porte : transforme n'importe quel mesh de porte importé en porte interactive en quelques clics, même quand son pivot est mal placé."
+    intro: "Marche avec n'importe quelle porte. Nythrox Interactive Door System transforme n'importe quel mesh de porte importé en porte interactive fonctionnelle en quelques clics, même quand son pivot est mal placé. Il construit une charnière virtuelle à partir de la géométrie réelle de la porte : le vantail tourne sur sa vraie arête et reste contre son cadre, sans retour dans votre logiciel 3D."
+    featuresTitle: "Ce qu'il fait"
     features:
-      - "Panneau guidé : sélectionne les meshes, enregistre la position fermée, la position ouverte, sauvegarde"
-      - Détecter le cadre mesure le dormant réel de l'ouverture et calibre le retrait de charnière en un clic
-      - Prévisualise l'animation complète dans l'éditeur, sans passer en mode Jeu
-      - Charnière virtuelle sur l'arête de vantail détectée, affinée par le retrait de charnière et un pivot en face de vantail
-      - "Mode Demonstrated : la porte tourne autour du centre exact de la pose enregistrée, idéal pour les encadrements inhabituels"
-      - Portes coulissantes prises en charge par la même procédure, sans réglage de charnière
-      - Verrouillage, fermeture automatique, sons d'ouverture, de fermeture et de refus, lissage du mouvement
-      - "Événements Blueprint : On Door Opened, On Door Closed, On Interaction Denied"
-      - Portes liées, pour les doubles vantaux et les sas
-      - "Porte visée : une touche ouvre seulement la porte que le joueur regarde"
-      - "Panneau, dialogues et invite en jeu en 4 langues : anglais, français, allemand et espagnol"
-      - "Prêt pour le multijoueur : autorité serveur, les clients ouvrent les portes sans réglage"
-    includes: "Plugin Unreal Engine 5.8 pour Windows 64 bits : source C++ complète (modules Runtime et Editor), un niveau de démonstration avec cinq montages de portes et sept Blueprints de porte, un manuel PDF illustré et un README en anglais, et 11 tests automatisés dont des tests réseau à deux joueurs."
-    notes: "Unreal Engine 5.8, Windows 64 bits seulement. Uniquement des portes : un outil ciblé, pas un cadre d'interaction générique. Les environnements montrés dans la galerie ne sont pas inclus."
-    idealFor: "Tout projet important des portes venant de CAO, de photogrammétrie, de kitbash ou d'un autre moteur, les visites d'architecture, les jeux d'horreur et d'exploration, et les level designers qui veulent des portes qui marchent maintenant plutôt qu'après un aller-retour par Blender."
+      - "Panneau guidé : créez la porte, tournez-la en position ouverte, enregistrez, c'est fait."
+      - "Charnière virtuelle sur la vraie arête et la vraie face du vantail, poignées et boutons ignorés."
+      - "Détecter le cadre cale la charnière sur le montant de l'ouverture."
+      - "L'aperçu dans l'éditeur joue le mouvement sans passer en mode Jeu."
+      - "Portes battantes et coulissantes, doubles portes liées et sas verrouillés entre eux."
+      - "Porte visée : une touche ouvre seulement la porte que le joueur regarde."
+      - "Prêt pour le multijoueur : autorité serveur, les clients ouvrent les portes sans réglage."
+      - "Options de jeu : verrou, fermeture automatique, sons, lissage et événements Blueprint."
+    included:
+      - "Source C++ complète, modules Runtime et Editor"
+      - "Niveau de démonstration avec cinq montages de portes et sept Blueprints de porte"
+      - "Manuel PDF illustré et README, en anglais"
+      - "Panneau, dialogues et invite en jeu en 4 langues : anglais, français, allemand, espagnol"
+      - "11 tests automatisés, dont des tests réseau à deux joueurs"
+    noteList:
+      - "Unreal Engine 5.8, Windows 64 bits seulement."
+      - "Uniquement des portes : un outil ciblé, pas un cadre d'interaction générique. Les environnements montrés dans la galerie ne sont pas inclus."
   es:
     title: Nythrox Interactive Door System
-    tagline: "Convierte cualquier mesh importado en una puerta interactiva funcional en menos de un minuto, incluso con el pivote roto."
-    intro: "Nythrox Interactive Door System construye una bisagra virtual a partir de la geometría real de la puerta. Los meshes de CAD, escaneos, kitbash o exportaciones de otros motores se abren limpiamente, sin pasar por Blender. Panel guiado en el editor, previsualización antes del modo Juego, bloqueo, sonidos, eventos Blueprint y estado de puerta replicado."
-    includes: "Plugin de Unreal Engine 5.8 para Windows 64 bits: código fuente C++ completo (módulos Runtime y Editor), un nivel de demostración con cinco montajes de puertas y siete Blueprints de puerta, un manual PDF ilustrado y un README en inglés, y 11 pruebas automatizadas, incluidas pruebas de red con dos jugadores."
-    notes: "Unreal Engine 5.8, solo Windows 64 bits. Solo puertas: una herramienta enfocada, no un framework de interacción genérico. Los entornos mostrados en la galería no están incluidos."
+    tagline: "Funciona con cualquier puerta: convierte cualquier malla de puerta importada en una puerta interactiva en unos clics, incluso con el pivote mal colocado."
+    intro: "Funciona con cualquier puerta. Nythrox Interactive Door System convierte cualquier malla de puerta importada en una puerta interactiva funcional en unos clics, incluso cuando su pivote está mal colocado. Construye una bisagra virtual a partir de la geometría real de la puerta: la hoja gira sobre su borde real y permanece contra su marco, sin volver a tu software 3D."
+    featuresTitle: "Qué hace"
+    features:
+      - "Panel guiado: crea la puerta, gírala hasta abrirla, graba y listo."
+      - "Bisagra virtual en el borde y la cara reales de la hoja, ignorando manillas y pomos."
+      - "Detectar marco calibra la bisagra sobre la jamba del hueco."
+      - "La vista previa del editor reproduce el movimiento sin entrar en modo Juego."
+      - "Puertas batientes y correderas, puertas dobles enlazadas y esclusas enclavadas."
+      - "Puerta enfocada: una tecla abre solo la puerta que mira el jugador."
+      - "Listo para multijugador: autoridad del servidor, los clientes abren puertas sin configuración."
+      - "Opciones de juego: bloqueo, cierre automático, sonidos, suavizado y eventos Blueprint."
+    included:
+      - "Código fuente C++ completo, módulos Runtime y Editor"
+      - "Nivel de demostración con cinco montajes de puertas y siete Blueprints de puerta"
+      - "Manual PDF ilustrado y README, en inglés"
+      - "Panel, diálogos e indicación en juego en 4 idiomas: inglés, francés, alemán, español"
+      - "11 pruebas automatizadas, incluidas pruebas de red con dos jugadores"
+    noteList:
+      - "Unreal Engine 5.8, solo Windows 64 bits."
+      - "Solo puertas: una herramienta enfocada, no un framework de interacción genérico. Los entornos mostrados en la galería no están incluidos."
 ---

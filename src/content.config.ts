@@ -7,6 +7,9 @@ const localeOverride = z.object({
   tagline: z.string().optional(),
   intro: z.string().optional(), // paragraphe d'accroche long
   features: z.array(z.string()).optional(),
+  featuresTitle: z.string().optional(), // titre de la liste `features`
+  included: z.array(z.string()).optional(), // liste "What's included"
+  noteList: z.array(z.string()).optional(), // liste "Important notes"
   includes: z.string().optional(), // ligne "Includes: ..."
   notes: z.string().optional(), // "Important notes: ..."
   idealFor: z.string().optional(), // "Ideal for: ..."
@@ -60,6 +63,14 @@ const assets = defineCollection({
       /* --- Contenu --- */
       intro: z.string().optional(), // paragraphe d'accroche (sinon corps markdown)
       features: z.array(z.string()).default([]), // 5 a 8 puces
+      /* Meme decoupage que la fiche Fab (12/10/2026) : `features` porte la
+         liste "What's in the map" (titre modifiable par `featuresTitle`, ex.
+         "What it does" pour un plugin), `included` la liste "What's included",
+         `noteList` les "Important notes". Les champs `includes`, `notes` et
+         `idealFor` restent acceptes pour les fiches qui ne sont pas sur Fab. */
+      featuresTitle: z.string().optional(),
+      included: z.array(z.string()).default([]),
+      noteList: z.array(z.string()).default([]),
       includes: z.string().optional(), // ligne "Includes: ..."
       notes: z.string().optional(), // "Important notes: ..."
       idealFor: z.string().optional(), // "Ideal for: ..."

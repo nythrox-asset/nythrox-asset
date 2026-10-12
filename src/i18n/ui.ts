@@ -54,6 +54,7 @@ export const ui = {
 
     'detail.allAssets': 'All assets',
     'detail.whatsIncluded': "What's included",
+    'detail.whatsInMap': "What's in the map",
     'detail.gallery': 'Gallery',
     'detail.technicalDetails': 'Technical details',
     'detail.includes': 'Includes',
@@ -148,6 +149,7 @@ export const ui = {
 
     'detail.allAssets': 'Todos los recursos',
     'detail.whatsIncluded': 'Qué incluye',
+    'detail.whatsInMap': 'Qué hay en el mapa',
     'detail.gallery': 'Galería',
     'detail.technicalDetails': 'Detalles técnicos',
     'detail.includes': 'Incluye',
@@ -242,6 +244,7 @@ export const ui = {
 
     'detail.allAssets': 'Toutes les ressources',
     'detail.whatsIncluded': 'Ce qui est inclus',
+    'detail.whatsInMap': 'Ce qu’il y a dans la map',
     'detail.gallery': 'Galerie',
     'detail.technicalDetails': 'Détails techniques',
     'detail.includes': 'Inclus',

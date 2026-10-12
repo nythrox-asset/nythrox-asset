@@ -2,6 +2,10 @@
 title: "Backrooms Poolrooms: Pool Complex and Flooded Tile Halls"
 tagline: "A tiled swimming complex and the flooded halls behind it: turquoise water, endless white ceramic tile, cool fluorescent light and nobody in it."
 intro: "A complete tiled swimming complex and the flooded halls behind it. An L shaped pool with its lap lane and steps, a cantilevered sun deck carried by a single mushroom column, a vast hall where dozens of tiled pillars stand in ankle deep water, and a receding arcade of square portals that fades into the distance. Everything is white and pale grey square ceramic tile, walls, floors and ceilings alike, broken only by turquoise water and thin black steel handrails. No sun, no sky, only cool fluorescent light and reflections on wet tile."
+# Retiree de la boutique le 12/10/2026 (Nathan : « retire poolroom de la
+# boutique ») : elle n'est pas publiee sur Fab. La fiche et ses images restent
+# dans le depot ; repasser draft a false le jour ou elle est publiee.
+draft: true
 featured: true
 order: 600
 date: 2026-07-27

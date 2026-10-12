@@ -25,7 +25,7 @@ export const ui = {
     'hero.titleLine1': 'Game-ready worlds,',
     'hero.titleLine2': 'built clean.',
     'hero.subtitle':
-      'Environments and modular kits for Unreal Engine. Organized files, verified collisions, drag-and-drop. No cleanup required.',
+      'Environments and modular kits for Unreal Engine, built by our team. Organized files, verified collisions, drag-and-drop. No cleanup required.',
     'hero.browse': 'Browse assets',
     'hero.visitFab': 'Visit Fab store',
 
@@ -88,7 +88,7 @@ export const ui = {
 
     'footer.explore': 'Explore',
     'footer.tagline':
-      'Clean, organized, game-ready 3D environments and modular kits for Unreal Engine. Drag-and-drop ready, no cleanup required.',
+      'Nythrox is a team of environment artists and tool programmers. We build clean, organized, game-ready 3D environments and modular kits for Unreal Engine, and we support every pack we ship.',
     'footer.rights': '© {year} Nythrox. All rights reserved.',
     'footer.builtFor': 'Built for the Fab marketplace.',
 
@@ -120,7 +120,7 @@ export const ui = {
     'hero.titleLine1': 'Mundos listos para jugar,',
     'hero.titleLine2': 'bien organizados.',
     'hero.subtitle':
-      'Entornos y kits modulares para Unreal Engine. Archivos organizados, colisiones verificadas, arrastra y suelta. Sin limpieza.',
+      'Entornos y kits modulares para Unreal Engine, creados por nuestro equipo. Archivos organizados, colisiones verificadas, arrastra y suelta. Sin limpieza.',
     'hero.browse': 'Ver recursos',
     'hero.visitFab': 'Ir a la tienda Fab',
 
@@ -183,7 +183,7 @@ export const ui = {
 
     'footer.explore': 'Explorar',
     'footer.tagline':
-      'Entornos 3D y kits modulares limpios, organizados y listos para Unreal Engine. Listos para arrastrar y soltar, sin limpieza.',
+      'Nythrox es un equipo de artistas de entornos y programadores de herramientas. Creamos entornos 3D y kits modulares limpios, organizados y listos para Unreal Engine, y damos soporte a cada pack que publicamos.',
     'footer.rights': '© {year} Nythrox. Todos los derechos reservados.',
     'footer.builtFor': 'Hecho para el marketplace Fab.',
 
@@ -215,7 +215,7 @@ export const ui = {
     'hero.titleLine1': 'Des mondes prêts à jouer,',
     'hero.titleLine2': 'propres et nets.',
     'hero.subtitle':
-      'Environnements et kits modulaires pour Unreal Engine. Fichiers organisés, collisions vérifiées, glisser-déposer. Sans nettoyage.',
+      'Environnements et kits modulaires pour Unreal Engine, créés par notre équipe. Fichiers organisés, collisions vérifiées, glisser-déposer. Sans nettoyage.',
     'hero.browse': 'Voir les ressources',
     'hero.visitFab': 'Voir la boutique Fab',
 
@@ -278,7 +278,7 @@ export const ui = {
 
     'footer.explore': 'Explorer',
     'footer.tagline':
-      'Environnements 3D et kits modulaires propres, organisés et prêts pour Unreal Engine. Glisser-déposer, sans nettoyage.',
+      'Nythrox est une équipe d’artistes d’environnement et de programmeurs d’outils. Nous créons des environnements 3D et des kits modulaires propres, organisés et prêts pour Unreal Engine, et nous suivons chaque pack que nous publions.',
     'footer.rights': '© {year} Nythrox. Tous droits réservés.',
     'footer.builtFor': 'Conçu pour la marketplace Fab.',
 

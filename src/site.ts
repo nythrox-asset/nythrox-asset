@@ -51,7 +51,7 @@ export const SITE = {
   doorSystem: {
     /** Video de presentation (YouTube, Vimeo...). */
     trailerUrl: '',
-    /** Page de vente Fab du plugin. */
-    fabUrl: '',
+    /** Page de vente Fab du plugin (publie le 30/09/2026). */
+    fabUrl: 'https://www.fab.com/listings/f6179ac0-8dfc-4ca2-9bdc-395ee75713f4',
   },
 } as const;

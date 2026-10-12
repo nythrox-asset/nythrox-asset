@@ -2,10 +2,10 @@
 title: Nythrox Interactive Door System
 tagline: "Turn any imported mesh into a working interactive door in under a minute, even when its pivot is broken."
 intro: "Nythrox Interactive Door System builds a virtual hinge from the door's real geometry, so meshes coming from CAD, scans, kitbashes or game exports open cleanly without a round-trip through Blender. Guided editor panel, in-editor preview before Play mode, locking, sounds, Blueprint events and replicated door state. A focused tool for doors, not a generic interaction framework."
-# Masque du site (decision Nathan 27/07/2026) : la fiche existe toujours et
-# reste modifiable, elle n'apparait simplement plus dans la boutique ni dans
-# les listes. Repasser a false le jour ou le plugin est publie sur Fab.
-draft: true
+# Publie sur Fab le 30/09/2026 : la fiche, masquee depuis le 27/07/2026 en
+# attendant, est de nouveau visible (12/10/2026). Textes realignes sur la
+# fiche Fab.
+draft: false
 featured: false
 order: 300
 date: 2026-07-27
@@ -19,8 +19,8 @@ tags: [plugin, door, interactive, hinge, pivot, unreal engine, ue5, blueprint, t
 # gallery:
 #   - ./media/door-system-panel.jpg
 
-# Commercial : renseigne fabUrl des que la fiche Fab est publiee.
-# fabUrl: https://www.fab.com/listings/...
+# Commercial : fiche Fab publiee le 30/09/2026.
+fabUrl: https://www.fab.com/listings/f6179ac0-8dfc-4ca2-9bdc-395ee75713f4
 
 features:
   - "Guided editor panel: select the meshes, record closed, record open, save"
@@ -32,11 +32,12 @@ features:
   - Locking, auto-close delay, open/close/locked sounds, motion easing
   - "Blueprint events: On Door Opened, On Door Closed, On Interaction Denied"
   - Linked doors for double leaves and airlocks
-  - Localized interaction prompt in English, French, German and Spanish
-  - Replicated door state for networked games, server authoritative
+  - "Focused door: one key press opens only the door the player looks at"
+  - "Panel, dialogs and in-game prompt in 4 languages: English, French, German and Spanish"
+  - "Multiplayer ready: server-authoritative, clients open doors with no setup"
 
-includes: "Unreal Engine 5.8 plugin for Windows 64-bit, Editor and Runtime modules, complete C++ source, and a full manual in English and French."
-notes: "Doors only. This is a focused tool, not a generic interaction framework. The demo scenes shown in the gallery are not included. A level-placed door has no owning connection, so a remote client must route its interaction through an actor it owns, which is one Blueprint node and documented in the manual."
+includes: "Unreal Engine 5.8 plugin for Windows 64-bit: full C++ source (Runtime and Editor modules), a demo level with five door setups and seven door Blueprints, an illustrated PDF manual and README in English, and 11 automated tests including two-player network tests."
+notes: "Unreal Engine 5.8, Windows 64-bit only. Doors only: a focused tool, not a generic interaction framework. Environments shown in the gallery are not included."
 idealFor: "Any project importing door meshes from CAD, photogrammetry, kitbashes or other engines, archviz walkthroughs, horror and exploration games, and level designers who need doors working now rather than after a Blender round-trip."
 
 specs:
@@ -45,8 +46,8 @@ specs:
   platforms: Win64
   source: Complete C++ included
   modules: "NythroxDoorSystem (Runtime), NythroxDoorSystemEditor (Editor)"
-  network: Replicated door state, server authoritative
-  documentation: English and French manual included
+  network: Server-authoritative, clients open doors with no setup
+  documentation: Illustrated PDF manual and README in English
   automationTests: true
 
 i18n:
@@ -64,15 +65,16 @@ i18n:
       - Verrouillage, fermeture automatique, sons d'ouverture, de fermeture et de refus, lissage du mouvement
       - "Événements Blueprint : On Door Opened, On Door Closed, On Interaction Denied"
       - Portes liées, pour les doubles vantaux et les sas
-      - Invite d'interaction localisée en anglais, français, allemand et espagnol
-      - État de porte répliqué pour les jeux en réseau, autorité serveur
-    includes: "Plugin Unreal Engine 5.8 pour Windows 64 bits, modules Editor et Runtime, source C++ complète, et un manuel complet en anglais et en français."
-    notes: "Uniquement des portes. C'est un outil ciblé, pas un cadre d'interaction générique. Les scènes de démonstration de la galerie ne sont pas incluses. Une porte posée dans le niveau n'a pas de connexion propriétaire : un client distant doit router son interaction par un acteur qu'il possède, ce qui tient en un nœud Blueprint et qui est documenté dans le manuel."
+      - "Porte visée : une touche ouvre seulement la porte que le joueur regarde"
+      - "Panneau, dialogues et invite en jeu en 4 langues : anglais, français, allemand et espagnol"
+      - "Prêt pour le multijoueur : autorité serveur, les clients ouvrent les portes sans réglage"
+    includes: "Plugin Unreal Engine 5.8 pour Windows 64 bits : source C++ complète (modules Runtime et Editor), un niveau de démonstration avec cinq montages de portes et sept Blueprints de porte, un manuel PDF illustré et un README en anglais, et 11 tests automatisés dont des tests réseau à deux joueurs."
+    notes: "Unreal Engine 5.8, Windows 64 bits seulement. Uniquement des portes : un outil ciblé, pas un cadre d'interaction générique. Les environnements montrés dans la galerie ne sont pas inclus."
     idealFor: "Tout projet important des portes venant de CAO, de photogrammétrie, de kitbash ou d'un autre moteur, les visites d'architecture, les jeux d'horreur et d'exploration, et les level designers qui veulent des portes qui marchent maintenant plutôt qu'après un aller-retour par Blender."
   es:
     title: Nythrox Interactive Door System
     tagline: "Convierte cualquier mesh importado en una puerta interactiva funcional en menos de un minuto, incluso con el pivote roto."
     intro: "Nythrox Interactive Door System construye una bisagra virtual a partir de la geometría real de la puerta. Los meshes de CAD, escaneos, kitbash o exportaciones de otros motores se abren limpiamente, sin pasar por Blender. Panel guiado en el editor, previsualización antes del modo Juego, bloqueo, sonidos, eventos Blueprint y estado de puerta replicado."
-    includes: "Plugin de Unreal Engine 5.8 para Windows 64 bits, módulos Editor y Runtime, código fuente C++ completo y manual en inglés y francés."
-    notes: "Solo puertas. Es una herramienta enfocada, no un framework de interacción genérico. Las escenas de demostración de la galería no están incluidas."
+    includes: "Plugin de Unreal Engine 5.8 para Windows 64 bits: código fuente C++ completo (módulos Runtime y Editor), un nivel de demostración con cinco montajes de puertas y siete Blueprints de puerta, un manual PDF ilustrado y un README en inglés, y 11 pruebas automatizadas, incluidas pruebas de red con dos jugadores."
+    notes: "Unreal Engine 5.8, solo Windows 64 bits. Solo puertas: una herramienta enfocada, no un framework de interacción genérico. Los entornos mostrados en la galería no están incluidos."
 ---
